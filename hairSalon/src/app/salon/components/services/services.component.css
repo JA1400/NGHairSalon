@@ -1,0 +1,18 @@
+.s-container {
+  flex-direction: column;
+}
+
+.n-and-p h6 {
+  box-sizing: border-box;
+  margin: 0;
+  font-size: 20px;
+  width: 100%;
+  border-bottom: 1px solid var(--third-color);
+  font-weight: 700;
+  padding: 0.2rem;
+}
+
+.s-price {
+  margin-left: auto;
+  text-align: right;
+}

@@ -1,0 +1,68 @@
+<main class="main-container d-flex">
+  <div
+    [ngClass]="{ hidden: !domService.displayMobileMenu }"
+    id="blur-overlay"
+  ></div>
+  <section class="hero-banner hero-3 d-flex">
+    <h1 class="hero-title">About</h1>
+  </section>
+  <article class="general-article split-article d-flex flex-reverse">
+    <section class="two-column split-section d-flex">
+      <h4 class="subhead-text no-margin w-90">Our Story</h4>
+      <h2 class="head-title no-margin w-90">
+        How We Came <br id="mobile-b" />
+        To Be
+      </h2>
+      <p class="section-text no-margin w-90">
+        Pellentesque elit eget gravida cum. Felis donec et odio pellentesque.
+        Orci a scelerisque purus semper. Lacus laoreet non curabitur gravida.
+        Semper quis lectus nulla at. A lacus vestibulum sed arcu non odio
+        euismod lacinia at. Vel turpis nunc eget lorem dolor. Lacus sed turpis
+        tincidunt id aliquet risus feugiat. Mauris commodo quis imperdiet massa
+        tincidunt nunc pulvinar.
+      </p>
+    </section>
+    <section class="square-img square-img-1 w-90"></section>
+  </article>
+  <!--         <div class="separator w-90"></div> -->
+  <article class="general-article w-article split-article d-flex">
+    <section class="two-column split-section d-flex">
+      <h4 class="subhead-text no-margin w-90">Kitty: The Artist</h4>
+      <h2 class="head-title no-margin w-90">
+        The Hands Behind<br id="mobile-b" />The Magic
+      </h2>
+      <p class="section-text no-margin w-90">
+        <span id="author-quote"
+          >“Aliquam ut porttitor leo a diam. Pellentesque massa placerat duis
+          ultricies lacus sed turpis tincidunt id. Sed arcu non odio euismod
+          lacinia at. Tortor at risus viverra adipiscing at in tellus integer.
+          Ante in nibh mauris cursus mattis molestie a iaculis at. Mollis nunc
+          sed id semper risus in hendrerit gravida. Condimentum lacinia quis vel
+          eros donec ac odio tempor. Id donec ultrices tincidunt arcu non
+          sodales neque. A condimentum vitae sapien pellentesque habitant morbi
+          tristique senectus et. In massa tempor nec feugiat.” </span
+        ><br /><b>- Kitty</b>
+      </p>
+    </section>
+    <section class="circular-image circular-img-4"></section>
+  </article>
+  <!-- <div class="separator w-90"></div> -->
+  <article class="general-article d-flex b">
+    <h4 class="subhead-text no-margin w-90">To Our Clients</h4>
+    <h2 class="head-title no-margin w-90">Thank You!</h2>
+    <p class="section-text no-margin w-90">
+      Pellentesque elit eget gravida cum. Felis donec et odio pellentesque. Orci
+      a scelerisque purus semper. Lacus laoreet non curabitur gravida. Semper
+      quis lectus nulla at. A lacus vestibulum sed arcu non odio euismod lacinia
+      at. Vel turpis nunc eget lorem dolor.
+    </p>
+    <a routerLink="/salon/contact" class="btn-style d-flex">Contact Us</a>
+    <button
+      (click)="this.domService.scrollToTop()"
+      id="to-top-btn"
+      class="subhead-text no-margin w-90"
+    >
+      ^ Back to the top ^
+    </button>
+  </article>
+</main>

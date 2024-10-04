@@ -1,0 +1,9 @@
+.square-img-1 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+    url("../../../../assets/images/image16.jpg");
+}
+
+#author-quote {
+  font-style: italic;
+  font-weight: 400;
+}

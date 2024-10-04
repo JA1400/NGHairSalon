@@ -1,0 +1,63 @@
+<nav class="d-flex">
+  <section class="d-flex">
+    <a routerLink="/salon/home" id="logo"></a>
+    <div class="d-flex">
+      <a
+        routerLink="/salon/home"
+        routerLinkActive="active-link"
+        class="main-links"
+        >Home</a
+      >
+      <a
+        routerLink="/salon/services"
+        routerLinkActive="active-link"
+        class="main-links"
+        >Services</a
+      >
+      <a
+        routerLink="/salon/about"
+        routerLinkActive="active-link"
+        class="main-links"
+        >About</a
+      >
+      <a
+        routerLink="/salon/gallery"
+        routerLinkActive="active-link"
+        class="main-links"
+        >Gallery</a
+      >
+      <a
+        routerLink="/salon/testimonials"
+        routerLinkActive="active-link"
+        class="main-links"
+        >Testimonials</a
+      >
+      <a
+        routerLink="/salon/contact"
+        routerLinkActive="active-link"
+        class="main-links"
+        >Contact</a
+      >
+    </div>
+  </section>
+  <button class="menu-btn-s" (click)="toggleMenu()" id="menu-btn">
+    <i class="fa-solid fa-bars fa-4x menu-icon d-flex"></i>
+  </button>
+</nav>
+
+<div
+  [ngClass]="{ 'side-menu-active': domService.displayMobileMenu }"
+  class="side-menu"
+>
+  <button class="menu-btn-s" id="side-menu-btn" (click)="toggleMenu()">
+    <i class="fa-solid fa-x fa-4x menu-icon d-flex"></i>
+  </button>
+  <div class="menu-list-container d-flex">
+    <a routerLink="/salon/home" class="menu-links">Home</a>
+    <a routerLink="/salon/services" class="menu-links">Services</a>
+    <a routerLink="/salon/about" class="menu-links">About</a>
+    <a routerLink="/salon/gallery" class="menu-links">Gallery</a>
+    <a routerLink="/salon/testimonials" class="menu-links">Testimonials</a>
+    <a routerLink="/salon/contact" class="menu-links">Contact</a>
+  </div>
+</div>

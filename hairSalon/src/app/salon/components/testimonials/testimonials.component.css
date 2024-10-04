@@ -1,0 +1,33 @@
+.t-btns {
+    margin: 0 .2em;
+  box-sizing: border-box;
+  height: 50px;
+  aspect-ratio: 1/1;
+  background-color: var(--primary-color);
+  border: 4px solid var(--third-color);
+  border-radius: 100%;
+  box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.465);
+  transition: 200ms;
+}
+
+.t-btns:hover {
+  background-color: #1f1f1f21;
+  transform: translateY(-5px);
+}
+
+.t-btns:active {
+  transform: scale(0.9);
+}
+
+.t-btns i {
+  color: var(--third-color);
+}
+
+.rec-image {
+  aspect-ratio: 1/0.5;
+}
+
+.rec-i-1 {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+    url("../../../../assets/images/image20.jpg");
+}

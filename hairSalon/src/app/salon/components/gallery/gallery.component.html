@@ -1,0 +1,86 @@
+<main class="main-container d-flex gallery">
+  <div
+    [ngClass]="{ hidden: !domService.displayMobileMenu }"
+    id="blur-overlay"
+  ></div>
+  <section class="hero-banner hero-4 d-flex">
+    <h1 class="hero-title">Gallery</h1>
+  </section>
+  <article class="general-article d-flex b">
+    <h4 class="subhead-text no-margin w-90">Photos</h4>
+    <h2 class="head-title no-margin w-90">
+      See Some of <br id="mobile-b" />
+      Our Work
+    </h2>
+    <p class="section-text no-margin w-90">
+      consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+      dolore magna aliqua. Neque convallis a cras semper auctor neque.
+      Ullamcorper velit sed ullamcorper morbi. Nisl suscipit adipiscing bibendum
+      est ultricies integer quis.
+    </p>
+
+    <!-- src="<%= img.image %><%= size %>" -->
+    <!--     <section class="gallery-img w-90">
+      <img
+        (click)="this.domService.fullScreenImg($event.target)"
+        class="g-prev-img"
+        src="../../../../assets/images/image21.jpg"
+        alt="gallery-image"
+      />
+    </section> -->
+    <ng-container *ngFor="let image of visibleImages">
+      <section
+        class="gallery-img w-90 blur-load"
+        style="background-color: #bd7655"
+      >
+        <img
+          (click)="this.domService.fullScreenImg($event.target)"
+          class="g-prev-img lazy"
+          [src]="image.image"
+          alt="gallery-image"
+        />
+      </section>
+    </ng-container>
+
+    <button
+      (click)="loadMore()"
+      class="btn-style d-flex"
+      [disabled]="disableBtn"
+    >
+      View More
+    </button>
+  </article>
+  <article class="general-article w-article d-flex b">
+    <!--  <section class="square-img rec-image rec-i-1 w-90"></section>
+    <div class="separator w-90"></div> -->
+    <h2 class="head-title no-margin w-90">
+      Like What <br id="mobile-b" />
+      You See?
+    </h2>
+    <p class="section-text no-margin w-90">
+      Pellentesque elit eget gravida cum. Felis donec et odio pellentesque. Orci
+      a scelerisque purus semper.
+    </p>
+    <a routerLink="/salon/contact" class="btn-style d-flex">Contact Us</a>
+    <button
+      (click)="this.domService.scrollToTop()"
+      id="to-top-btn"
+      class="subhead-text no-margin w-90"
+    >
+      ^ Back to the top ^
+    </button>
+  </article>
+</main>
+<aside *ngIf="this.domService.displayFullScreen" class="full-screen-w">
+  <button
+    (click)="this.domService.closeFullScreen()"
+    class="close-w-btn d-flex"
+  >
+    <i class="fa-solid fa-x fa-3x i-prev-icon"></i>
+  </button>
+  <img
+    class="full-screen-img"
+    [src]="this.domService.imgSrc"
+    alt="full-screen image"
+  />
+</aside>

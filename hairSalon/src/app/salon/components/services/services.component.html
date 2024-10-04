@@ -1,0 +1,136 @@
+<main class="main-container d-flex services">
+  <div
+    [ngClass]="{ hidden: !domService.displayMobileMenu }"
+    id="blur-overlay"
+  ></div>
+  <section class="hero-banner hero-2 d-flex">
+    <h1 class="hero-title">Services</h1>
+  </section>
+  <article class="general-article split-article d-flex flex-reverse">
+    <section class="two-column split-section d-flex">
+      <h4 class="subhead-text no-margin w-90">Makeup</h4>
+      <h2 class="head-title no-margin w-90">
+        Personalized Look <br id="mobile-b" />
+        and Colors
+      </h2>
+      <p class="section-text no-margin w-90">
+        These are just words to fill remaining space consectetur adipiscing
+        elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Neque convallis a cras semper auctor neque. Ullamcorper velit sed
+        ullamcorper morbi. Nisl suscipit adipiscing bibendum est ultricies
+        integer quis.
+      </p>
+    </section>
+
+    <section class="two-column circular-image circular-img-2"></section>
+  </article>
+  <!-- <div class="separator w-90"></div> -->
+  <article class="general-article w-article split-article d-flex">
+    <section class="two-column split-section d-flex">
+      <h4 class="subhead-text no-margin w-90">Hairstyles</h4>
+      <h2 class="head-title no-margin w-90">
+        Stunning Hair to<br id="mobile-b" />Complete The Look
+      </h2>
+      <p class="section-text no-margin w-90">
+        Gravida quis blandit turpis cursus in hac habitasse platea. Tellus
+        molestie nunc non blandit massa enim nec. Vitae proin sagittis nisl
+        rhoncus mattis. Adipiscing at in tellus integer feugiat scelerisque
+        varius. Lacus vel facilisis volutpat est. Nisi quis eleifend quam
+        adipiscing vitae proin sagittis nisl rhoncus.
+      </p>
+    </section>
+    <section class="circular-image circular-img-3"></section>
+  </article>
+
+  <!-- <div class="separator w-90"></div> -->
+  <article class="general-article d-flex b">
+    <h4 class="subhead-text no-margin w-90">Groups</h4>
+    <h2 class="head-title no-margin w-90">
+      One or One Dozen,<br id="mobile-b" />We Can Get It Done
+    </h2>
+    <p class="section-text no-margin w-90">
+      Volutpat est velit egestas dui id. Tortor consequat id porta nibh
+      venenatis cras sed. Vitae turpis massa sed elementum tempus egestas. Sem
+      fringilla ut morbi tincidunt augue interdum velit. Ornare arcu dui vivamus
+      arcu. Semper viverra nam libero justo laoreet sit amet. Eu nisl nunc mi
+      ipsum faucibus.
+    </p>
+    <article class="gallery-preview w-90">
+      <div class="grid-item grid-item-1">
+        <img
+          (click)="this.domService.fullScreenImg($event.target)"
+          class="g-prev-img"
+          src="../../../../assets/images/image10.jpg"
+          alt="gallery-image"
+        />
+      </div>
+      <div class="grid-item grid-item-2">
+        <img
+          (click)="this.domService.fullScreenImg($event.target)"
+          class="g-prev-img"
+          src="../../../../assets/images/image11.jpg"
+          alt="gallery-image"
+        />
+      </div>
+      <div class="grid-item grid-item-3">
+        <img
+          (click)="this.domService.fullScreenImg($event.target)"
+          class="g-prev-img"
+          src="../../../../assets/images/image12.jpg"
+          alt="gallery-image"
+        />
+      </div>
+      <div class="grid-item grid-item-4">
+        <img
+          (click)="this.domService.fullScreenImg($event.target)"
+          class="g-prev-img"
+          src="../../../../assets/images/image13.jpg"
+          alt="gallery-image"
+        />
+      </div>
+      <div class="grid-item grid-item-5">
+        <img
+          (click)="this.domService.fullScreenImg($event.target)"
+          class="g-prev-img"
+          src="../../../../assets/images/image14.jpg"
+          alt="gallery-image"
+        />
+      </div>
+    </article>
+  </article>
+  <!-- <div class="separator w-90"></div> -->
+  <article class="general-article w-article d-flex b">
+    <h4 class="subhead-text no-margin w-90">Pricing</h4>
+    <h2 class="head-title no-margin w-90">Current Services</h2>
+    <article class="s-container w-90 d-flex">
+      <section *ngFor="let service of serviceStoreItem.service$ | async">
+        <div class="n-and-p d-flex">
+          <h6 class="s-title">{{ service.title }}</h6>
+          <h6 class="s-price">${{ service.price }}</h6>
+        </div>
+        <p class="s-desc">{{ service.description }}</p>
+      </section>
+    </article>
+    <a routerLink="/salon/contact" class="btn-style d-flex">Contact Us</a>
+    <button
+      (click)="this.domService.scrollToTop()"
+      id="to-top-btn"
+      class="subhead-text no-margin w-90"
+    >
+      ^ Back to the top ^
+    </button>
+  </article>
+</main>
+<aside *ngIf="this.domService.displayFullScreen" class="full-screen-w">
+  <button
+    (click)="this.domService.closeFullScreen()"
+    class="close-w-btn d-flex"
+  >
+    <i class="fa-solid fa-x fa-3x i-prev-icon"></i>
+  </button>
+  <img
+    class="full-screen-img"
+    [src]="this.domService.imgSrc"
+    alt="full-screen image"
+  />
+</aside>

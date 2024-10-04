@@ -1,0 +1,168 @@
+<main class="main-container d-flex home">
+  <div
+    [ngClass]="{ hidden: !domService.displayMobileMenu }"
+    id="blur-overlay"
+  ></div>
+  <section class="hero-banner hero-1 d-flex">
+    <h1 class="hero-title">
+      Kitty’s Hair & <br />
+      Makeup Salon
+    </h1>
+    <a routerLink="/salon/services" class="btn-style d-flex">Our Services</a>
+  </section>
+  <article class="general-article d-flex b">
+    <h4 class="subhead-text no-margin w-90">The Best Makeup Artist in MKE</h4>
+    <h2 class="head-title no-margin w-90">
+      Your Happiness is <br />
+      Our Priority
+    </h2>
+    <p class="section-text no-margin w-90">
+      These are just words to fill remaining space consectetur adipiscing elit,
+      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Neque
+      convallis a cras semper auctor neque. Ullamcorper velit sed ullamcorper
+      morbi. Nisl suscipit adipiscing bibendum est ultricies integer quis.
+    </p>
+  </article>
+  <!-- <div class="separator w-90"></div> -->
+  <article class="general-article w-article split-article d-flex">
+    <section class="two-column circular-image circular-img-1"></section>
+    <section class="two-column split-section d-flex">
+      <h4 class="subhead-text no-margin w-90">We Do Hairstyles Too</h4>
+      <h2 class="head-title no-margin w-90">
+        It’s More Than <br />
+        Just Makeup
+      </h2>
+      <p class="section-text no-margin w-90">
+        aliqua. Neque convallis a cras semper auctor neque. Ullamcorper velit
+        sed ullamcorper morbi. Nisl suscipit adipiscing bibendum est ultricies
+        integer quis Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna
+      </p>
+    </section>
+  </article>
+
+  <!-- <div class="separator w-90"></div> -->
+  <article class="general-article d-flex b">
+    <h4 class="subhead-text no-margin w-90">Our Gallery</h4>
+    <h2 class="head-title no-margin w-90">
+      Some of Our <br />
+      Latest Work
+    </h2>
+    <article class="gallery-preview w-90">
+      <div class="grid-item grid-item-1">
+        <img
+          (click)="this.domService.fullScreenImg($event.target)"
+          class="g-prev-img img-zoom"
+          src="../../../../assets/images/image3.jpg"
+          alt="gallery-image"
+        />
+      </div>
+      <div class="grid-item grid-item-2">
+        <img
+          (click)="this.domService.fullScreenImg($event.target)"
+          class="g-prev-img"
+          src="../../../../assets/images/image4.jpg"
+          alt="gallery-image"
+        />
+      </div>
+      <div class="grid-item grid-item-3">
+        <img
+          (click)="this.domService.fullScreenImg($event.target)"
+          class="g-prev-img"
+          src="../../../../assets/images/image5.jpg"
+          alt="gallery-image"
+        />
+      </div>
+      <div class="grid-item grid-item-4">
+        <img
+          (click)="this.domService.fullScreenImg($event.target)"
+          class="g-prev-img"
+          src="../../../../assets/images/image6.jpg"
+          alt="gallery-image"
+        />
+      </div>
+    </article>
+    <a routerLink="/salon/gallery" class="btn-style d-flex">View More</a>
+  </article>
+  <!-- <div class="separator w-90"></div> -->
+  <article class="general-article w-article split-article d-flex">
+    <section class="two-column d-flex split-section testi-section">
+      <h4 class="subhead-text no-margin w-90">Our Happy Clients</h4>
+      <h2 class="head-title no-margin w-90">
+        See What Our <br />
+        Clients Think
+      </h2>
+      <figure class="icon-img">
+        <img
+          src="../../../../assets/images/quote-left-solid.svg"
+          width="100%"
+          height="100%"
+          alt="quote-icon"
+        />
+      </figure>
+    </section>
+    <section class="two-column d-flex split-section testi-section">
+      <div class="slideshow-container w-90">
+        <div
+          *ngFor="
+            let testi of (storedTestimonial.storedTestimonials$ | async)?.slice(
+              0,
+              3
+            );
+            let i = index
+          "
+          class="mySlides fade"
+          [style.display]="visibleSlides[i] ? 'flex' : 'none'"
+        >
+          <p class="section-text c-quote no-margin">
+            {{ testi.message }}
+          </p>
+          <h3 class="c-quote-name no-margin">- {{ testi.name }}</h3>
+        </div>
+      </div>
+
+      <div style="text-align: center">
+        <span class="dot" (click)="showSlide(0)"></span>
+        <span class="dot" (click)="showSlide(1)"></span>
+        <span class="dot" (click)="showSlide(2)"></span>
+      </div>
+    </section>
+  </article>
+  <!-- <div class="separator w-90"></div> -->
+  <article class="general-article d-flex b">
+    <h4 class="subhead-text no-margin w-90">Contact Us</h4>
+    <h2 class="head-title no-margin w-90">
+      Ready To Give <br />
+      Us a Try?
+    </h2>
+    <p class="section-text no-margin w-90">
+      We’re currently available on a appointment only basis. We are working to
+      get fixed hours soon! In the mean time, feel free to contact us with any
+      inquiry. Our accommodation hours are very flexible and we can even come to
+      you! Whether its a single person or a group, our customer satisfaction is
+      guaranteed. Reach out via email, phone, or our contact form!
+    </p>
+    <a routerLink="/salon/contact" class="btn-style d-flex">Contact Us</a>
+    <button
+      (click)="this.domService.scrollToTop()"
+      id="to-top-btn"
+      class="subhead-text no-margin w-90"
+    >
+      ^ Back to the top ^
+    </button>
+  </article>
+</main>
+<aside *ngIf="this.domService.displayFullScreen" class="full-screen-w">
+  <button
+    class="close-w-btn d-flex"
+    (click)="this.domService.closeFullScreen()"
+  >
+    <i class="fa-solid fa-x fa-3x i-prev-icon"></i>
+  </button>
+  <img
+    #fullScreenCont
+    class="full-screen-img"
+    [src]="this.domService.imgSrc"
+    alt="full-screen image"
+  />
+</aside>

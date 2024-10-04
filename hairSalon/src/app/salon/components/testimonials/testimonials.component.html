@@ -1,0 +1,66 @@
+<main class="main-container d-flex">
+  <div
+    [ngClass]="{ hidden: !domService.displayMobileMenu }"
+    id="blur-overlay"
+  ></div>
+  <section class="hero-banner hero-5 d-flex">
+    <h1 class="hero-title">Testimonials</h1>
+  </section>
+  <article class="general-article split-article d-flex">
+    <section class="two-column d-flex split-section testi-section">
+      <h4 class="subhead-text no-margin w-90">Words From Our Clients</h4>
+      <h2 class="head-title no-margin w-90">
+        Valuable Client<br id="mobile-b" />Feedback
+      </h2>
+      <!-- <p class="section-text no-margin w-90"> consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+        et dolore magna aliqua. Neque convallis a cras semper auctor neque. Ullamcorper velit sed ullamcorper morbi.
+        Nisl suscipit adipiscing bibendum est ultricies integer quis.</p>
+     -->
+      <figure class="icon-img">
+        <i class="fa-solid fa-quote-left fa-6x"></i>
+      </figure>
+    </section>
+    <section class="two-column d-flex split-section testi-section">
+      <div class="slideshow-container w-90">
+        <ng-container *ngFor="let testi of sTestimonials; let i = index">
+          <div *ngIf="currentIndex === i" class="mySlides fade">
+            <p class="section-text c-quote no-margin">
+              {{ testi.message }}
+            </p>
+            <h3 class="c-quote-name no-margin">{{ testi.name }}</h3>
+          </div>
+        </ng-container>
+      </div>
+
+      <section>
+        <button (click)="prevSlide()" class="t-btns">
+          <i class="fa-solid fa-arrow-left fa-2x left-arrow"></i>
+        </button>
+        <button (click)="nextSlide()" class="t-btns">
+          <i class="fa-solid fa-arrow-right fa-2x right-arrow"></i>
+        </button>
+      </section>
+    </section>
+  </article>
+  <article class="general-article w-article d-flex b">
+    <!--  <section class="square-img rec-image rec-i-1 w-90"></section>
+    <div class="separator w-90"></div> -->
+    <h2 class="head-title no-margin w-90">Thank You</h2>
+    <p class="section-text no-margin w-90">
+      Pellentesque elit eget gravida cum. Felis donec et odio pellentesque. Orci
+      a scelerisque purus semper. Lacus laoreet non curabitur gravida. Semper
+      quis lectus nulla at. A lacus vestibulum sed arcu non odio euismod lacinia
+      at. Vel turpis nunc eget lorem dolor. Lacus sed turpis tincidunt id
+      aliquet risus feugiat. Mauris commodo quis imperdiet massa tincidunt nunc
+      pulvinar.
+    </p>
+    <a routerLink="/salon/contact" class="btn-style d-flex">Contact Us</a>
+    <button
+      (click)="this.domService.scrollToTop()"
+      id="to-top-btn"
+      class="subhead-text no-margin w-90"
+    >
+      ^ Back to the top ^
+    </button>
+  </article>
+</main>

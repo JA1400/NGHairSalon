@@ -1,0 +1,39 @@
+<footer class="main-footer d-flex">
+  <article class="footer-info d-flex w-90">
+    <section class="footer-links d-flex">
+      <h5 class="f-text-style link-t-text">Quick Links</h5>
+      <a class="f-text-style footer-link" routerLink="/salon/home">Home</a>
+      <a class="f-text-style footer-link" routerLink="/salon/services"
+        >Services</a
+      >
+      <a class="f-text-style footer-link" routerLink="/salon/about">About</a>
+      <a class="f-text-style footer-link" routerLink="/salon/gallery"
+        >Gallery</a
+      >
+      <a class="f-text-style footer-link" routerLink="/salon/testimonials"
+        >Testimonials</a
+      >
+      <a class="f-text-style footer-link" routerLink="/salon/contact"
+        >Contact</a
+      >
+    </section>
+    <section class="contact-info d-flex">
+      <h5 class="f-text-style link-t-text">Contact</h5>
+      <p class="f-text-style b-info">Location</p>
+      <p class="f-text-style b-info">
+        {{ this.footerInfo.address }}
+      </p>
+      <p class="f-text-style b-info">Telephone</p>
+      <a class="f-text-style b-info" href=""> {{ this.footerInfo.phone }}</a>
+      <p class="f-text-style b-info">Email</p>
+      <a class="f-text-style b-info" href="">
+        {{ this.footerInfo.email }}
+      </a>
+    </section>
+  </article>
+  <div class="footer-separator w-90"></div>
+  <p class="copyright-text f-text-style w-90">
+    Copyright @2023 Kitty’s Hair & Makeup Salon | All Rights Reserved | Website
+    design by JAC Solutions
+  </p>
+</footer>
