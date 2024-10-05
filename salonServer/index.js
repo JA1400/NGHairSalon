@@ -1,19 +1,17 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const PORT = 3000;
-const Contact = require("./models/contact");
-const Testimonial = require("./models/testimonial");
-const Service = require("./models/service");
-const Image = require("./models/image");
-const Inquiry = require("./models/inquiry");
 const cors = require("cors");
 const bodyparser = require("body-parser");
+const mainRoutes = require("./routes/main");
+const dbUrl = process.env.DB_URL;
 
 mongoose
-  .connect(
-    "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.1"
-  )
+  .connect(dbUrl)
   .then(() => {
     console.log("Database Connected!!");
   })
@@ -21,10 +19,11 @@ mongoose
     console.log("Error!");
     console.log(err);
   });
+
 app.use(cors());
 app.use(bodyparser.json());
 
-app.get("/create", async (req, res) => {
+/* app.get("/create", async (req, res) => {
   const testi = new Testimonial({
     name: "Mary",
     email: "Mary@gmail.com",
@@ -33,40 +32,15 @@ app.get("/create", async (req, res) => {
   });
   await testi.save();
   res.status(200).send(testi);
+}); */
+
+app.use("/", mainRoutes);
+
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message = "Something went wrong" } = err;
+  res.status(statusCode).send(message);
 });
 
-app.get("/image", async (req, res) => {
-  const image = await Image.find();
-  res.status(200).send(image);
-});
-
-app.get("/contact", async (req, res) => {
-  const contact = await Contact.findOne();
-  res.status(200).send(contact);
-});
-
-app.get("/storedtestimonial", async (req, res) => {
-  const testi = await Testimonial.find();
-  res.status(200).send(testi);
-});
-
-app.get("/service", async (req, res) => {
-  const service = await Service.find();
-  res.status(200).send(service);
-});
-
-app.post("/inquiry", async (req, res) => {
-  const { name, email, subject, message } = req.body;
-  const inquiry = new Inquiry({
-    name: name,
-    email: email,
-    subject: subject,
-    message: message,
-  });
-  await inquiry.save();
-  res.status(200).send({ message: "success" });
-});
-
-app.listen(PORT, () => {
-  console.log("Serving on port 3000");
+app.listen(process.env.PORT, () => {
+  console.log(`Serving on port ${process.env.PORT}`);
 });
