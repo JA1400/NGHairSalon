@@ -13,6 +13,11 @@ const routes: Routes = [
       import('./salon/salon.module').then((m) => m.SalonModule),
   },
   {
+    path: 'admin',
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminModule),
+  },
+  {
     path: '',
     redirectTo: 'salon/home',
     pathMatch: 'full',
