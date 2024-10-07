@@ -1,6 +1,4 @@
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
+require('dotenv').config();
 
 const express = require("express");
 const app = express();
@@ -9,6 +7,7 @@ const cors = require("cors");
 const bodyparser = require("body-parser");
 const mainRoutes = require("./routes/main");
 const dbUrl = process.env.DB_URL;
+const port = process.env.PORT;
 
 mongoose
   .connect(dbUrl)
@@ -41,6 +40,6 @@ app.use((err, req, res, next) => {
   res.status(statusCode).send(message);
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Serving on port ${process.env.PORT}`);
+app.listen(3000, () => {
+  console.log(`Serving on port ${port}`);
 });
