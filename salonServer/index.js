@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 
 const express = require("express");
 const app = express();
@@ -40,6 +40,6 @@ app.use((err, req, res, next) => {
   res.status(statusCode).send(message);
 });
 
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log(`Serving on port ${port}`);
 });
