@@ -14,6 +14,11 @@ const routes: Routes = [
   },
   {
     path: 'admin',
+    redirectTo: 'admin/info',
+    pathMatch: 'full',
+  },
+  {
+    path: 'admin',
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminModule),
   },

@@ -17,7 +17,7 @@ body {
   --admin-nav-h: 100px;
   --admin-foot-h: 5rem;
   --min-height: calc(100% - var(--admin-foot-h) - var(--admin-nav-h));
-  --max-width-val: 600px;
+  --max-width-val: 650px;
   --primary-color: #fff8f1;
   --secondary-color: black;
   --third-color: #bd7655;
@@ -43,6 +43,10 @@ body {
   display: none !important;
 }
 
+.hidden-btn {
+  opacity: 0;
+}
+
 .b-no-scroll {
   overflow: hidden;
 }
@@ -57,10 +61,15 @@ body {
   :root {
     --cont-padding: 2rem;
   }
+
+  .login-flash {
+    background-color: white;
+  }
 }
 
 @media (min-width: 992px) {
   :root {
+    --max-width-val: 750px;
     --g-max-width: 800px;
     --gap: 1.8rem;
     --cont-padding: 3rem;
@@ -73,4 +82,3 @@ body {
     --cont-padding: 4.6rem;
   }
 }
-
