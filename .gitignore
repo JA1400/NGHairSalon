@@ -1,4 +1,5 @@
-hairSalon
+hairSalon/.angular
+hairSalon/.vscode
+hairSalon/.node_modules
 node_modules
-.vscode
 salonServer/.env

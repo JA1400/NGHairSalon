@@ -1,0 +1,13 @@
+.admin-footer {
+  min-height: var(--admin-foot-h);
+  background: black;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-footer h4 {
+  margin: 0 1.4rem;
+  color: #fff8f1;
+  text-align: center;
+  font-weight: 200;
+}
