@@ -21,6 +21,18 @@
   margin-top: auto;
 }
 
+#blur-overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #d9d9d987;
+  backdrop-filter: blur(2px);
+  z-index: 1;
+  animation: fade 0.2s;
+}
+
 /* **************************** */
 
 .general-form {
@@ -214,7 +226,7 @@
 .contact-field:valid,
 .a-inputs:valid,
 .q-testi-fields:valid {
-  border-color: #bd7655;
+  border-color: #bd7655 !important;
 }
 
 .contact-field {
@@ -267,6 +279,10 @@
   width: 22px;
   height: 22px;
   border: none;
+}
+
+.open-d-form i {
+  color: #ff0000;
 }
 
 .open-u-form {

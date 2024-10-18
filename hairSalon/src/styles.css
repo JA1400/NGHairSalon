@@ -13,6 +13,11 @@ body {
   background-color: var(--primary-color);
 }
 
+input,
+textarea {
+  font-family: "DM Sans", sans-serif;
+}
+
 :root {
   --admin-nav-h: 100px;
   --admin-foot-h: 5rem;
@@ -55,6 +60,80 @@ body {
   -webkit-box-shadow: 0px 3px 5px 0px rgba(132, 132, 132, 0.75);
   -moz-box-shadow: 0px 3px 5px 0px rgba(132, 132, 132, 0.75);
   box-shadow: 0px 3px 5px 0px rgba(132, 132, 132, 0.75);
+}
+
+.btn-style {
+  position: relative;
+  width: 80%;
+  max-width: 185px;
+  height: 55px;
+  border-radius: 10px;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.75);
+  transition: 200ms;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.btn-alter {
+  background: none;
+  border: none;
+  color: #bd7655;
+  text-decoration: underline;
+}
+
+.btn-alter:disabled {
+  color: #717171;
+}
+
+.btn-style:hover {
+  transform: translateY(-5px);
+}
+
+.btn-style:active,
+.btn-alter:active {
+  transform: scale(0.9);
+}
+
+.btn-style:disabled {
+  background-color: #717171;
+}
+
+.btn-style:disabled:active,
+.btn-alter:disabled:active {
+  transform: none;
+}
+
+.btn-style:disabled:hover,
+.btn-alter:disabled:hover {
+  transform: none;
+}
+
+.not-valid {
+  border-color: #ff0000 !important;
+}
+
+.fade {
+  animation: fade 1s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.4;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @media (min-width: 768px) {
