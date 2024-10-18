@@ -1,26 +1,31 @@
-
 <main class="main-container grow-test">
   <!-- ************************************************************* -->
 
   <form
+    *ngIf="openDeleteForm"
     id="delete-form"
-    class="d-flex general-form delete-form hidden"
-    action="admin/services/"
-    method="post"
+    class="d-flex general-form delete-form"
+    (ngSubmit)="deleteService(serviceToDelete)"
   >
     <h2>Are you sure you want to delete?</h2>
-    <button class="btn-style cancel-delete" type="button">Cancel</button>
+    <button
+      class="btn-style cancel-delete"
+      type="button"
+      (click)="toggleDeleteForm()"
+    >
+      Cancel
+    </button>
     <button class="btn-style" type="submit">Delete</button>
   </form>
 
   <!-- ************************************************************* -->
 
   <form
+    #addForm="ngForm"
+    *ngIf="openAddForm"
     id="add-form"
-    class="d-flex general-form add-form hidden validated-form"
-    action="/admin/services"
-    method="post"
-    novalidate
+    class="d-flex general-form add-form validated-form"
+    (ngSubmit)="addService(addForm)"
   >
     <div class="d-flex form-section">
       <label for="a-title">Name of Service</label>
@@ -28,7 +33,8 @@
         class="a-inputs"
         type="text"
         id="a-title"
-        name="service[title]"
+        name="title"
+        [(ngModel)]="addServiceForm.title"
         required
       />
     </div>
@@ -38,9 +44,11 @@
         class="a-inputs"
         type="number"
         id="a-price"
-        name="service[price]"
+        name="price"
         min="0"
         required
+        [(ngModel)]="addServiceForm.price"
+        pattern="^\d+$"
       />
     </div>
     <div class="d-flex form-section">
@@ -48,34 +56,48 @@
       <textarea
         id="a-description"
         class="s-general a-inputs"
-        name="service[description]"
+        name="description"
         rows="3"
         cols="50"
+        [(ngModel)]="addServiceForm.description"
         required
       ></textarea>
     </div>
     <div class="d-flex" id="add-form-btns">
-      <button type="submit" class="btn-alter">Add</button>
-      <button id="a-form-cancel" class="btn-alter" type="button">Cancel</button>
+      <button type="submit" class="btn-alter" [disabled]="addForm.invalid">
+        Add
+      </button>
+      <button
+        (click)="toggleAddForm()"
+        id="a-form-cancel"
+        class="btn-alter"
+        type="button"
+      >
+        Cancel
+      </button>
     </div>
   </form>
 
   <!-- ************************************************************* -->
 
-  <div id="blur-overlay" class="hidden"></div>
+  <div
+    *ngIf="domService.displayMobileMenu || openDeleteForm || openAddForm"
+    id="blur-overlay"
+  ></div>
 
   <!-- ************************************************************* -->
 
   <h1 id="page-title">Business Info</h1>
-
+  <div *ngIf="actionMessage" class="flash-message" role="alert">
+    {{ actionMessage }}
+  </div>
   <article class="d-flex article-container" id="contact-contianer">
     <h2 class="article-title">Contact</h2>
 
     <form
-      class="contact-group d-flex validated-form"
-      action="/admin/contact?_method=PUT"
-      method="post"
-      novalidate
+      [formGroup]="contactEditForm"
+      (ngSubmit)="onContactUpdate()"
+      class="contact-group d-flex"
     >
       <div class="d-flex contact-info-g">
         <div class="d-flex info-piece info-top-piece">
@@ -83,14 +105,13 @@
         </div>
         <div class="d-flex contact-bottom-piece">
           <input
-            oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-            type="number"
-            value="<%= contacts[0].phone %>"
+            type="text"
+            [value]="contactInfo.phone"
             maxlength="10"
-            name="contact[phone]"
+            name="phone"
             class="contact-field s-general"
-            required
-            disabled
+            formControlName="phone"
+            [ngClass]="{ 'not-valid': phone?.touched && (phone?.errors?.['pattern'] || phone?.errors?.['required'] ) }"
           />
         </div>
       </div>
@@ -101,11 +122,11 @@
         <div class="d-flex contact-bottom-piece">
           <input
             type="text"
-            value="<%= contacts[0].email %>"
-            name="contact[email]"
+            [value]="contactInfo.email"
+            name="email"
             class="contact-field s-general"
-            required
-            disabled
+            formControlName="email"
+            [ngClass]="{ 'not-valid': email?.touched && (email?.errors?.['email'] || email?.errors?.['required'] ) }"
           />
         </div>
       </div>
@@ -115,34 +136,40 @@
         </div>
         <div class="d-flex contact-bottom-piece">
           <textarea
-            name="contact[address]"
+            (input)="onInput($event)"
+            name="address"
+            [value]="contactInfo.address"
             rows="2"
             cols="50"
+            formControlName="address"
             class="c-desc contact-field s-general"
-            required
-            disabled
-          >
-          <!-- test* *************************** -->
-          </textarea>
+          ></textarea>
         </div>
       </div>
       <div class="c-btn-area d-flex">
         <button
           id="c-cancel-btn"
-          class="btn-alter c-btns hidden-btn"
+          class="btn-alter c-btns"
           type="button"
-          disabled
+          [ngClass]="{ hidden: !contactFormDisable }"
+          (click)="toggleDisable()"
         >
           Cancel
         </button>
-        <button id="c-edit-btn" class="btn-alter c-btns" type="button">
+        <button
+          [ngClass]="{ hidden: contactFormDisable }"
+          (click)="toggleEnable()"
+          id="c-edit-btn"
+          class="btn-alter c-btns"
+          type="button"
+        >
           Edit
         </button>
         <button
           id="c-update-btn"
-          class="btn-alter c-btns hidden-btn"
+          class="btn-alter c-btns fade"
           type="submit"
-          disabled
+          [ngClass]="{ hidden: !contactFormDisable }"
         >
           Done
         </button>
@@ -153,79 +180,60 @@
     <h2 class="article-title">Services</h2>
 
     <form
-      class="service-group validated-form"
-      action="/admin/services/<%= service.id %>?_method=PUT"
-      method="post"
-      novalidate
+      *ngFor="let service of services; let i = index"
+      class="service-group"
+      (ngSubmit)="onServiceUpdate(service._id)"
     >
       <div class="d-flex service-info-g">
         <div class="d-flex info-piece info-top-piece">
-          <h3 class="service-num">S<%= (index + 1) %></h3>
+          <h3 class="service-num">S {{ i + 1 }}</h3>
           <button
+            [disabled]="!service.isValid"
             type="submit"
-            class="update-btn s-check-btn hidden-btn btn-general"
-            disabled
+            class="update-btn s-check-btn btn-general"
           >
-            <img
-              src="/images/circle-check-solid.svg"
-              width="100%"
-              height="100%"
-              alt="check-icon"
-            />
-          </button>
-          <button type="button" class="open-u-form s-pen-btn btn-general">
-            <img
-              src="/images/pen-to-square-solid.svg"
-              width="100%"
-              height="100%"
-              alt="edit-icon"
-            />
+            <i class="fa-solid fa-circle-check fa-xl"></i>
           </button>
           <button
             type="button"
-            value="<%= service.id %>"
             class="open-d-form btn-general"
+            (click)="toggleDeleteForm(); addToDelete(service._id)"
           >
-            <img
-              src="/images/trash-solid.svg"
-              width="100%"
-              height="100%"
-              alt="trash-icon"
-            />
+            <i class="fa-solid fa-trash fa-xl"></i>
           </button>
         </div>
         <div class="d-flex info-piece info-bottom-piece">
           <input
             type="text"
-            value="<%= service.title %>"
-            name="service[title]"
-            class="s-title s-general f-inputs input-<%= index %>"
+            name="title"
+            class="s-title s-general f-inputs"
+            [(ngModel)]="services[i].title"
+            (ngModelChange)="checkValidService(i)"
             required
-            disabled
           />
           <input
             type="number"
-            value="<%= service.price %>"
-            name="service[price]"
-            class="s-price s-general f-inputs input-<%= index %>"
+            name="price"
+            class="s-price s-general f-inputs"
             min="0"
+            [(ngModel)]="services[i].price"
+            (ngModelChange)="checkValidService(i)"
             required
-            disabled
           />
           <textarea
-            name="service[description]"
+            name="description"
             rows="1"
             cols="50"
-            class="s-desc s-general f-inputs description input-<%= index %>"
+            class="s-desc s-general f-inputs description"
             required
-            disabled
-          >
-            <!-- txt ********************** -->
-        </textarea>
+            [(ngModel)]="services[i].description"
+            (ngModelChange)="checkValidService(i)"
+          ></textarea>
         </div>
       </div>
     </form>
-    <%})%>
-    <button id="open-a-btn" class="btn-alter">Add</button>
+    <button (click)="toggleAddForm()" id="open-a-btn" class="btn-alter">
+      Add
+    </button>
   </article>
 </main>

@@ -10,4 +10,18 @@ export class ServiceService {
   loadServices(): Observable<Service[]> {
     return this.httpClient.get<Service[]>('http://localhost:3000/service');
   }
+
+  updateService(
+    id: string,
+    title: string,
+    price: number,
+    description: string
+  ): Observable<any> {
+    const url: string = `http://localhost:3000/service${id}`;
+    return this.httpClient.put(url, {
+      title: title,
+      price: price,
+      description: description,
+    });
+  }
 }
