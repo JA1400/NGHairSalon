@@ -65,7 +65,7 @@ export class InfoComponent implements OnInit {
         { value: 'default@default.com', disabled: true },
         [Validators.required, Validators.email],
       ],
-      address: [{ value: '', disabled: true }, Validators.required],
+      address: [{ value: 'not loaded', disabled: true }, Validators.required],
     });
   }
 
