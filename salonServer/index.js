@@ -9,7 +9,8 @@ const mainRoutes = require("./routes/main");
 const adminRoutes = require("./routes/admin");
 const dbUrl = process.env.DB_URL;
 const port = process.env.PORT;
-
+const Testimonial = require("./models/testimonial");
+const sTestimonial = require("./models/storedTestimonial");
 const Inquiry = require("./models/inquiry");
 
 mongoose
@@ -26,11 +27,18 @@ app.use(cors());
 app.use(bodyparser.json());
 
 app.get("/create", async (req, res) => {
-  const testi = new Inquiry({
+  /*   const testi = new Inquiry({
     name: "Test",
     email: "test@test",
     message: "test",
   });
+  await testi.save(); */
+  const testi = new Testimonial({
+    name: "Agatha",
+    email: "agathe@gmail.com",
+    message: "This is a pending testimonials",
+  });
+
   await testi.save();
   res.status(200).send(testi);
 });
