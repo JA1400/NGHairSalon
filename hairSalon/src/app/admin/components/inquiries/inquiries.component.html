@@ -1,0 +1,27 @@
+<main class="main-container grow-test">
+  <div *ngIf="domService.displayMobileMenu" id="blur-overlay"></div>
+  <h1 id="page-title">Inquiries</h1>
+  <div *ngIf="actionMessage" class="flash-message" role="alert">
+    {{ actionMessage }}
+  </div>
+  <article
+    *ngFor="let inquiry of inquiries; let i = index"
+    class="d-flex article-container"
+  >
+    <h2 class="article-title">Inquiry {{ i + 1 }}</h2>
+    <form class="d-flex inquiry-form" (ngSubmit)="onSubmit(inquiry._id)">
+      <h3 class="inquiry-box inquiry-label">Name:</h3>
+      <div class="inquiry-box i-c-name">- {{ inquiry.name }}</div>
+      <h3 class="inquiry-box inquiry-label">Email:</h3>
+      <div class="inquiry-box i-c-name">- {{ inquiry.email }}</div>
+      <h3 class="inquiry-box inquiry-label">Subject:</h3>
+      <div class="inquiry-box i-c-name">- Haircut!</div>
+      <h3 class="inquiry-box inquiry-label">Message:</h3>
+      <div class="inquiry-box i-c-name">{{ inquiry.message }}</div>
+      <button class="btn-alter c-btns" type="submit">Delete</button>
+    </form>
+  </article>
+  <article *ngIf="!inquiries.length" class="d-flex article-container empty-inquiry">
+    <h2 class="article-title">No Inquiries</h2>
+  </article>
+</main>

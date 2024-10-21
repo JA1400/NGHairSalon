@@ -10,6 +10,8 @@ const adminRoutes = require("./routes/admin");
 const dbUrl = process.env.DB_URL;
 const port = process.env.PORT;
 
+const Inquiry = require("./models/inquiry");
+
 mongoose
   .connect(dbUrl)
   .then(() => {
@@ -23,15 +25,15 @@ mongoose
 app.use(cors());
 app.use(bodyparser.json());
 
-/* app.get("/create", async (req, res) => {
-  const testi = new Service({
-    title: "2nd test title",
-    price: 45,
-    description: "2nd test description",
+app.get("/create", async (req, res) => {
+  const testi = new Inquiry({
+    name: "Test",
+    email: "test@test",
+    message: "test",
   });
   await testi.save();
   res.status(200).send(testi);
-}); */
+});
 
 app.use("/", mainRoutes);
 app.use("/admin", adminRoutes);

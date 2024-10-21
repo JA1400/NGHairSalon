@@ -1,5 +1,6 @@
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 body {
@@ -16,6 +17,10 @@ body {
 input,
 textarea {
   font-family: "DM Sans", sans-serif;
+}
+
+.grow-test {
+  min-height: calc(var(--min-height) - 2.8rem);
 }
 
 :root {
