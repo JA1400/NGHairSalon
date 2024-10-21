@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 import { ServiceStoreItem } from '../salon/services/service/service.storeitem';
 import { ServiceService } from '../salon/services/service/service.service';
 import { AdminServices } from './services/services/services.service';
+import { InquiriesComponent } from './components/inquiries/inquiries.component';
+import { InquiryStoreItem } from './services/inquiry/inquiry.storeitem';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { AdminServices } from './services/services/services.service';
     AdminNavbarComponent,
     FooterComponent,
     InfoComponent,
+    InquiriesComponent,
   ],
   imports: [
     CommonModule,
@@ -36,6 +39,7 @@ import { AdminServices } from './services/services/services.service';
     ServiceStoreItem,
     ServiceService,
     AdminServices,
+    InquiryStoreItem,
   ],
 })
 export class AdminModule {}
