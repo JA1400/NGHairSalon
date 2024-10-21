@@ -1,4 +1,4 @@
-const Testimonial = require("../models/testimonial");
+const sTestimonial = require("../models/storedTestimonial");
 const Service = require("../models/service");
 const Contact = require("../models/contact");
 const Image = require("../models/image");
@@ -15,7 +15,7 @@ module.exports.getContactInfo = async (req, res) => {
 };
 
 module.exports.getTestimonials = async (req, res) => {
-  const testi = await Testimonial.find();
+  const testi = await sTestimonial.find();
   res.status(200).send(testi);
 };
 
