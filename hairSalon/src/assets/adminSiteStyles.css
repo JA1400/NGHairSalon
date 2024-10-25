@@ -229,6 +229,12 @@
   border-color: #bd7655 !important;
 }
 
+.contact-field:invalid,
+.a-inputs:invalid,
+.q-testi-fields:invalid {
+  border-color: #ff0000 !important;
+}
+
 .contact-field {
   padding: 2%;
 }
@@ -363,4 +369,23 @@
 .open-d-form img {
   filter: invert(12%) sepia(82%) saturate(5447%) hue-rotate(357deg)
     brightness(96%) contrast(87%);
+}
+
+.inquiry-form {
+  flex-direction: column;
+  width: 100%;
+  gap: 0.2rem;
+}
+
+.inquiry-box {
+  margin: 0;
+  padding: 0.1rem 0;
+}
+
+.inquiry-label {
+  font-size: 18px;
+}
+
+.empty-inquiry {
+  height: 280px;
 }

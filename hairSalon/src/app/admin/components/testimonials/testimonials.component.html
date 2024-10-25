@@ -1,0 +1,123 @@
+<main class="main-container grow-test">
+  <div
+    *ngIf="domService.displayMobileMenu || openDeleteForm"
+    id="blur-overlay"
+  ></div>
+  <!-- ************************************************************* -->
+
+  <form
+    *ngIf="openDeleteForm"
+    id="delete-form"
+    class="d-flex general-form delete-form"
+    (ngSubmit)="deleteTestimonial()"
+  >
+    <h2>Are you sure you want to delete?</h2>
+    <button
+      class="btn-style cancel-delete"
+      type="button"
+      (click)="toggleDeleteForm()"
+    >
+      Cancel
+    </button>
+    <button class="btn-style" type="submit">Delete</button>
+  </form>
+
+  <!-- ************************************************************* -->
+
+  <h1 id="page-title">Testimonials</h1>
+  <div *ngIf="actionMessage" class="flash-message" role="alert">
+    {{ actionMessage }}
+  </div>
+  <form
+    *ngFor="let testimonial of pendingTestimonials; let i = index"
+    class="d-flex article-container validated-form"
+    (ngSubmit)="storeTestimonial(i)"
+  >
+    <h2 class="article-title">New Testimonial From {{ testimonial.name }}</h2>
+    <div class="d-flex inquiry-form">
+      <h3 class="inquiry-box inquiry-label">Name:</h3>
+
+      <input
+        class="q-testi-fields s-general input-<%= index %>"
+        type="text"
+        name="name"
+        [(ngModel)]="pendingTestimonials[i].name"
+        (ngModelChange)="checkValidTestimonial(i)"
+        required
+      /><!-- ****************************** Why that? -->
+      <h3 class="inquiry-box inquiry-label">Email:</h3>
+
+      <input
+        class="q-testi-fields s-general input-<%= index %>"
+        type="email"
+        name="email"
+        [(ngModel)]="pendingTestimonials[i].email"
+        (ngModelChange)="checkValidTestimonial(i)"
+        required
+      />
+      <h3 class="inquiry-box inquiry-label">Message:</h3>
+
+      <textarea
+        rows="2"
+        cols="50"
+        name="message"
+        class="q-testi-fields c-desc contact-field s-general description input-<%= index %>"
+        [(ngModel)]="pendingTestimonials[i].message"
+        (ngModelChange)="checkValidTestimonial(i)"
+        required
+      ></textarea>
+    </div>
+    <div class="button-area d-flex testimonial-btns">
+      <button
+        class="btn-alter c-btns"
+        type="submit"
+        [disabled]="!testimonial.isValid"
+      >
+        Add
+      </button>
+      <button
+        class="btn-alter c-btns"
+        type="button"
+        (click)="toggleDeleteForm(); addToDelete(0, testimonial._id)"
+      >
+        Delete
+      </button>
+    </div>
+  </form>
+  <article
+    *ngIf="!pendingTestimonials.length"
+    class="d-flex article-container empty-inquiry"
+  >
+    <h2 class="article-title">No New Testimonials</h2>
+  </article>
+
+  <div class="separator"></div>
+
+  <article
+    *ngFor="let testi of storedTestimonials; let i = index"
+    class="d-flex article-container testi-entries"
+  >
+    <h2 class="article-title">{{ testi.name }}'s Testimonial</h2>
+    <div class="d-flex inquiry-form">
+      <h3 class="inquiry-box inquiry-label">Name:</h3>
+      <div class="inquiry-box i-c-name">{{ testi.name }}</div>
+      <h3 class="inquiry-box inquiry-label">Email:</h3>
+      <div class="inquiry-box i-c-name">{{ testi.email }}</div>
+      <h3 class="inquiry-box inquiry-label">Message:</h3>
+      <div class="inquiry-box i-c-name">{{ testi.message }}</div>
+    </div>
+    <button
+      class="btn-alter c-btns"
+      type="submit"
+      (click)="toggleDeleteForm(); addToDelete(1, testi._id)"
+    >
+      Delete
+    </button>
+  </article>
+  <article
+    *ngIf="!storedTestimonials.length"
+    class="d-flex article-container empty-inquiry"
+  >
+    <h2 class="article-title">No Testimonials on Website!</h2>
+  </article>
+</main>
