@@ -1,0 +1,28 @@
+.button-area {
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.store-t-content {
+  width: 100%;
+}
+
+.testimonial-btns button:disabled {
+  opacity: 0.5;
+}
+
+.testimonial-btns button:disabled:active {
+  transform: none;
+}
+
+.q-testi-fields:disabled {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.q-testi-fields {
+  border-radius: 5px;
+}
+
+.q-testi-fields:focus {
+  border-color: #bd7655;
+}

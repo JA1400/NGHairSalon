@@ -169,6 +169,7 @@
           id="c-update-btn"
           class="btn-alter c-btns fade"
           type="submit"
+          [disabled]="contactEditForm.invalid"
           [ngClass]="{ hidden: !contactFormDisable }"
         >
           Done
