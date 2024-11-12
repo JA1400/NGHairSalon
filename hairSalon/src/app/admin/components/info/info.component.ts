@@ -145,10 +145,12 @@ export class InfoComponent implements OnInit {
 
   toggleDeleteForm(): void {
     this.openDeleteForm = !this.openDeleteForm;
+    this.domService.toggleOverflow(this.openDeleteForm);
   }
 
   toggleAddForm(): void {
     this.openAddForm = !this.openAddForm;
+    this.domService.toggleOverflow(this.openAddForm);
   }
 
   addToDelete(id?: string): void {
@@ -178,7 +180,7 @@ export class InfoComponent implements OnInit {
           this.services = [...this.services, service];
         },
         error: (e) => {
-          this.actionMessage = e.error.message;
+          console.log(e);
         },
       });
     this.toggleAddForm();

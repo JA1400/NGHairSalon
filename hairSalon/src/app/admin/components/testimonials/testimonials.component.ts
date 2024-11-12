@@ -76,6 +76,7 @@ export class TestimonialsComponent implements OnInit {
 
   toggleDeleteForm(): void {
     this.openDeleteForm = !this.openDeleteForm;
+    this.domService.toggleOverflow(this.openDeleteForm);
   }
 
   filterDeletedTestimonial(testiType?: number): void {

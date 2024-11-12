@@ -4,15 +4,15 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
-const bodyparser = require("body-parser");
 const mainRoutes = require("./routes/main");
 const adminRoutes = require("./routes/admin");
 const dbUrl = process.env.DB_URL;
 const port = process.env.PORT;
+const mongoSanitize = require("express-mongo-sanitize");
 const Testimonial = require("./models/testimonial");
+const xss = require("xss");
 const sTestimonial = require("./models/storedTestimonial");
 const Inquiry = require("./models/inquiry");
-
 mongoose
   .connect(dbUrl)
   .then(() => {
@@ -24,7 +24,17 @@ mongoose
   });
 
 app.use(cors());
-app.use(bodyparser.json());
+app.use(express.json());
+
+app.use(mongoSanitize());
+app.use((req, res, next) => {
+  // Sanitize all request body fields
+  for (const key in req.body) {
+    req.body[key] = xss(req.body[key]);
+  }
+
+  next();
+});
 
 app.get("/create", async (req, res) => {
   /*   const testi = new Inquiry({
@@ -43,6 +53,11 @@ app.get("/create", async (req, res) => {
   res.status(200).send(testi);
 });
 
+/* app.post("/uploadImage", upload.single("image"), (req, res) => {
+  console.log(req.file);
+  res.status(200).send({ message: "Successfully received" });
+});
+ */
 app.use("/", mainRoutes);
 app.use("/admin", adminRoutes);
 

@@ -4,7 +4,7 @@ import { AdminComponent } from './admin.component';
 import { InfoComponent } from './components/info/info.component';
 import { InquiriesComponent } from './components/inquiries/inquiries.component';
 import { TestimonialsComponent } from './components/testimonials/testimonials.component';
-
+import { GalleryComponent } from './components/gallery/gallery.component';
 const routes: Routes = [
   {
     path: '',
@@ -21,6 +21,10 @@ const routes: Routes = [
       {
         path: 'testimonials',
         component: TestimonialsComponent,
+      },
+      {
+        path: 'gallery',
+        component: GalleryComponent,
       },
     ],
   },

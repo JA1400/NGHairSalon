@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, delay, Observable, of } from 'rxjs';
 import { Service } from 'src/app/salon/types/service.type';
 import { ContactInfo } from 'src/app/salon/types/contact.type';
 import { Inquiry } from 'src/app/salon/types/inquiry.type';
@@ -9,6 +9,24 @@ import { TestimonialTwo } from 'src/app/salon/types/testimonialTwo.type';
 @Injectable()
 export class AdminServices {
   constructor(private httpClient: HttpClient) {}
+
+  deleteImage(id?: string): Observable<any> {
+    const url: string = `http://localhost:3000/admin/image/${id}`;
+    return this.httpClient.delete(url);
+  }
+
+  addImage(image: FormData): Observable<any> {
+    return this.httpClient
+      .post('http://localhost:3000/admin/image', image)
+      .pipe(
+        delay(2000),
+        catchError((error) => {
+          return of(null);
+        })
+      );
+  }
+
+  /* *********************************** */
 
   loadPendingTestimonials(): Observable<any> {
     return this.httpClient.get<Testimonial[]>(
