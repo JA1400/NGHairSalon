@@ -73,8 +73,9 @@ export class AdminServices {
   /* *********************************** */
 
   updateContact(contact: ContactInfo): Observable<any> {
+    const { phone, email, address } = contact;
     const url: string = `http://localhost:3000/admin/contact/${contact._id}`;
-    return this.httpClient.put(url, contact);
+    return this.httpClient.put(url, { phone, email, address });
   }
 
   /* *********************************** */
@@ -85,8 +86,9 @@ export class AdminServices {
   }
 
   updateService(service: Service): Observable<any> {
+    const { title, price, description } = service;
     const url: string = `http://localhost:3000/admin/services/${service._id}`;
-    return this.httpClient.put(url, service);
+    return this.httpClient.put(url, { title, price, description });
   }
 
   deleteService(id?: string): Observable<any> {
