@@ -1,0 +1,112 @@
+<main class="main-container grow-test">
+  <!-- ************************************************************* -->
+
+  <div
+    *ngIf="domService.displayMobileMenu || openDeleteForm"
+    id="blur-overlay"
+  ></div>
+
+  <!-- ************************************************************* -->
+
+  <form
+    *ngIf="openDeleteForm"
+    class="d-flex general-form delete-form delete-position"
+    (ngSubmit)="deleteImage()"
+  >
+    <h2>Are you sure you want to delete?</h2>
+    <button
+      class="btn-style cancel-delete"
+      (click)="toggleDeleteForm()"
+      type="button"
+    >
+      Cancel
+    </button>
+    <button class="btn-style" type="submit">Delete</button>
+  </form>
+
+  <!-- ************************************************************* -->
+
+  <h1 id="page-title">Gallery Images</h1>
+  <div *ngIf="actionMessage" class="flash-message" role="alert">
+    {{ actionMessage }}
+  </div>
+  <article class="d-flex article-container">
+    <form
+      id="img-upload-form"
+      class="d-flex"
+      enctype="multipart/form-data"
+      (ngSubmit)="onImageUpload()"
+    >
+      <h2 class="article-title g-title">
+        Current Total: {{ storedImages.length }}
+      </h2>
+      <div id="img-prev">
+        <!--         <img
+          *ngFor="let image of images"
+          id="upload-icon"
+          class="img-child"
+          [ngClass]="{ 'single-img': images.length === 1 }"
+          [src]="image"
+        /> -->
+        <div
+          *ngFor="let image of imagesToUpload"
+          @fadeIn
+          class="img-child"
+          [ngClass]="{ 'single-img': imagesToUpload.length === 1 }"
+        >
+          <div
+            *ngIf="image.uploading || image.uploaded"
+            class="img-overlay d-flex"
+          >
+            <div @fadeAndSlide *ngIf="image.uploading" class="bouncing-dots">
+              <div class="dot animation"></div>
+              <div class="dot animation"></div>
+              <div class="dot animation"></div>
+            </div>
+            <i
+              @fadeAndSlide
+              *ngIf="image.uploaded"
+              class="fa-solid fa-file-circle-check fa-3x img-success"
+            ></i>
+          </div>
+          <img [src]="image.image" />
+        </div>
+        <i *ngIf="!imagesToUpload.length" class="fa-solid fa-image fa-7x"></i>
+      </div>
+      <input
+        [formControl]="fileInput"
+        type="file"
+        multiple
+        name="image"
+        id="img-file"
+        accept="image/*"
+        (change)="onFileSelected($event)"
+      />
+      <div class="g-form-btns d-flex">
+        <label id="img-in-label" class="btn-style sm-btn d-flex" for="img-file"
+          >Choose Photo</label
+        >
+        <button
+          [disabled]="!enableUploadBtn"
+          id="upload-btn"
+          class="btn-style sm-btn"
+          type="submit"
+        >
+          Upload
+        </button>
+      </div>
+    </form>
+    <div class="store-imgs d-flex">
+      <div *ngFor="let img of storedImages" class="img-group">
+        <button
+          type="button"
+          class="delete-img"
+          (click)="addToDelete(img._id); toggleDeleteForm()"
+        >
+          <i class="fa-solid fa-trash fa-xl"></i>
+        </button>
+        <img class="s-img" [src]="img.image" alt="stored-img" />
+      </div>
+    </div>
+  </article>
+</main>

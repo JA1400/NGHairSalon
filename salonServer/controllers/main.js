@@ -32,6 +32,7 @@ module.exports.sendInquiry = async (req, res) => {
     subject: subject,
     message: message,
   });
-  await inquiry.save();
-  res.status(200).send({ message: "success" });
+  /* await inquiry.save(); */
+  res.status(200).send(inquiry);
+  /* res.status(200).send({ message: "success" }); */
 };

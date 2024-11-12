@@ -21,7 +21,10 @@
       <button class="btn-alter c-btns" type="submit">Delete</button>
     </form>
   </article>
-  <article *ngIf="!inquiries.length" class="d-flex article-container empty-inquiry">
+  <article
+    *ngIf="!inquiries.length"
+    class="d-flex article-container empty-inquiry"
+  >
     <h2 class="article-title">No Inquiries</h2>
   </article>
 </main>

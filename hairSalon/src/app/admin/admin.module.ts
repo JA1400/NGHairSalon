@@ -20,6 +20,9 @@ import { TestimonialsComponent } from './components/testimonials/testimonials.co
 import { PendingTestimonialStoreItem } from './services/testimonials/pendingtestimonial.storeitem';
 import { TestimonialStoreItem } from '../salon/services/testimonial/testimonial.storeitem';
 import { TestimonialService } from '../salon/services/testimonial/testimonial.service';
+import { GalleryComponent } from './components/gallery/gallery.component';
+import { ImageStoreItem } from '../salon/services/image/image.storeitem';
+import { ImageService } from '../salon/services/image/image.service';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,7 @@ import { TestimonialService } from '../salon/services/testimonial/testimonial.se
     InfoComponent,
     InquiriesComponent,
     TestimonialsComponent,
+    GalleryComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +52,8 @@ import { TestimonialService } from '../salon/services/testimonial/testimonial.se
     PendingTestimonialStoreItem,
     TestimonialStoreItem,
     TestimonialService,
+    ImageStoreItem,
+    ImageService,
   ],
 })
 export class AdminModule {}

@@ -4,7 +4,7 @@
   <form
     *ngIf="openDeleteForm"
     id="delete-form"
-    class="d-flex general-form delete-form"
+    class="d-flex general-form delete-form delete-position"
     (ngSubmit)="deleteService(serviceToDelete)"
   >
     <h2>Are you sure you want to delete?</h2>
@@ -24,7 +24,7 @@
     #addForm="ngForm"
     *ngIf="openAddForm"
     id="add-form"
-    class="d-flex general-form add-form validated-form"
+    class="d-flex general-form add-form validated-form delete-position"
     (ngSubmit)="addService(addForm)"
   >
     <div class="d-flex form-section">
