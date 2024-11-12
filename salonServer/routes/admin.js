@@ -10,7 +10,6 @@ const {
   validateService,
   validateContact,
   validateTestimonial,
-  validateInquiry,
 } = require("../utils/validateModel");
 const multer = require("multer");
 const storage = multer.diskStorage({
@@ -24,17 +23,21 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.put("/contact/:id", catchAsync(contact.updateContact));
+router.put("/contact/:id", validateContact, catchAsync(contact.updateContact));
 
 router.post("/services", validateService, catchAsync(service.addService));
-router.put("/services/:id", catchAsync(service.updateService));
+router.put("/services/:id", validateService, catchAsync(service.updateService));
 router.delete("/services/:id", catchAsync(service.deleteService));
 
 router.get("/inquiry", catchAsync(inquiry.getInquiries));
 router.delete("/inquiry/:id", catchAsync(inquiry.deleteInquiry));
 
 router.get("/testimonials", catchAsync(testimonials.getPendingTestimonials));
-router.put("/testimonials", catchAsync(testimonials.storeTestimonial));
+router.put(
+  "/testimonials",
+  validateTestimonial,
+  catchAsync(testimonials.storeTestimonial)
+);
 router.delete(
   "/pendingtestimonials/:id",
   catchAsync(testimonials.deleteTestimonial)
