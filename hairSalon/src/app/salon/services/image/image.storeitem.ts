@@ -11,7 +11,7 @@ export class ImageStoreItem extends StoreItem<Image[]> {
   }
 
   async loadImages() {
-    this.imageService.loadServices().subscribe((service) => {
+    this.imageService.loadImages().subscribe((service) => {
       this.setValue(service);
     });
   }

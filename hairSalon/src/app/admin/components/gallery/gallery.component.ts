@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomService } from 'src/app/salon/services/dom/dom.service';
 import { AdminServices } from '../../services/services/services.service';
-import { concatMap, finalize, from, Observable, take } from 'rxjs';
+import { concatMap, delay, finalize, from, map, Observable, take } from 'rxjs';
 import { Image } from 'src/app/salon/types/image.type';
 import { ImageStoreItem } from 'src/app/salon/services/image/image.storeitem';
 import { trigger, transition, style, animate } from '@angular/animations';
@@ -54,24 +54,96 @@ export class GalleryComponent implements OnInit {
   openDeleteForm: boolean = false;
   enableUploadBtn: boolean = false;
   disableChooseBtn: boolean = false;
+  deleteBtn: boolean = true;
   actionMessage: string = '';
   imageToDelete?: string = '';
   storedImages: Image[];
   selectedFiles: FileList;
   imagesToUpload: ImageToUpload[] = [];
+  reachedEnd: boolean = false;
+  loading: boolean = true;
+  totalImages: number = 0;
+  startIndex: number = 0;
+  endIndex: number = 4;
 
   constructor(
     public domService: DomService,
     private imageStoreItem: ImageStoreItem,
     private adminServices: AdminServices
-  ) {
-    imageStoreItem.loadImages();
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.imageStoreItem.images$.subscribe((images) => {
-      this.storedImages = images;
-    });
+    this.imageStoreItem
+      .loadImages()
+      .then(() => {
+        this.imageStoreItem.images$
+          .pipe(
+            delay(500),
+            take(2),
+            map((images) => {
+              this.totalImages = images.length;
+              const firstFourImages = images.slice(
+                this.startIndex,
+                this.endIndex
+              );
+              return firstFourImages;
+            })
+          )
+          .subscribe({
+            next: (firstFourImages) => {
+              this.storedImages = [...firstFourImages];
+            },
+            error: (error) => {
+              this.actionMessage = 'Error Loading Images!';
+            },
+            complete: () => {
+              this.toggleLoading();
+              this.calculateNextImages();
+            },
+          });
+      })
+      .catch(() => {
+        this.actionMessage = 'Error Loading Images!';
+        this.totalImages = 0;
+      });
+  }
+
+  addImagesOnScroll(): void {
+    if (this.reachedEnd) return;
+    this.toggleLoading();
+    this.imageStoreItem.images$
+      .pipe(
+        take(1),
+        map((images) => images.slice(this.startIndex, this.endIndex))
+      )
+      .subscribe({
+        next: (nextFourImages) => {
+          this.storedImages = [...this.storedImages, ...nextFourImages];
+        },
+        error: (error) => {
+          this.actionMessage = 'Error Loading Images!';
+        },
+        complete: () => {
+          this.calculateNextImages();
+          this.toggleLoading();
+        },
+      });
+  }
+
+  calculateNextImages(): void {
+    if (this.reachedEnd) return;
+
+    this.endIndex = Math.min(this.endIndex + 4, this.totalImages);
+    this.startIndex = Math.min(this.startIndex + 4, this.endIndex);
+
+    if (this.startIndex === this.endIndex) {
+      this.reachedEnd = true;
+    }
+  }
+
+  toggleLoading(): void {
+    this.loading = !this.loading;
+    console.log(this.loading);
   }
 
   toggleAnimation(image: ImageToUpload): void {
@@ -81,6 +153,10 @@ export class GalleryComponent implements OnInit {
   toggleComplete(image: ImageToUpload): void {
     image.uploading = false;
     image.uploaded = true;
+  }
+
+  toggleDeleteBtn(): void {
+    this.deleteBtn = !this.deleteBtn;
   }
 
   testAnimation(): void {
@@ -97,6 +173,10 @@ export class GalleryComponent implements OnInit {
 
   disableFileInput() {
     this.fileInput.disable();
+  }
+
+  loadMoreImages(start: number, end: number): void {
+    this.imageStoreItem;
   }
 
   removeImageSequentially() {
@@ -164,12 +244,15 @@ export class GalleryComponent implements OnInit {
       )
       .subscribe({
         next: (result) => {
+          console.log(result);
           this.toggleComplete(this.imagesToUpload[index]);
           this.actionMessage = `${result.message} ${index + 1} Image(s)`;
           index++;
+          this.storedImages = [...this.storedImages, result.image];
         },
         error: (error) => {
-          this.actionMessage = error.error.message;
+          console.log(error);
+          /* this.actionMessage = error.error.message; */
         },
         complete: () => {},
       });
@@ -182,6 +265,7 @@ export class GalleryComponent implements OnInit {
   }
 
   deleteImage(): void {
+    this.toggleDeleteBtn();
     this.adminServices
       .deleteImage(this.imageToDelete)
       .pipe(take(1))
@@ -189,10 +273,13 @@ export class GalleryComponent implements OnInit {
         next: (result: any) => {
           this.actionMessage = result.message;
           this.filterImageOut(this.imageToDelete);
-          this.toggleDeleteForm();
         },
         error: (e) => {
           this.actionMessage = e.error.message;
+        },
+        complete: () => {
+          this.toggleDeleteForm();
+          this.toggleDeleteBtn();
         },
       });
   }

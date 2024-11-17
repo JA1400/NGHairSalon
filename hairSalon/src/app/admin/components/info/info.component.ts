@@ -15,10 +15,23 @@ import {
   Validators,
 } from '@angular/forms';
 import { Service } from 'src/app/salon/types/service.type';
+import { trigger, transition, style, animate } from '@angular/animations';
 @Component({
   selector: 'app-info',
   templateUrl: './info.component.html',
   styleUrls: ['./info.component.css', '../../../../assets/adminSiteStyles.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('200ms ease-in-out', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate('200ms ease-in-out', style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
 export class InfoComponent implements OnInit {
   contactInfo: ContactInfo;

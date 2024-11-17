@@ -2,6 +2,7 @@
   <!-- ************************************************************* -->
 
   <form
+    @fadeIn
     *ngIf="openDeleteForm"
     id="delete-form"
     class="d-flex general-form delete-form delete-position"
@@ -21,6 +22,7 @@
   <!-- ************************************************************* -->
 
   <form
+    @fadeIn
     #addForm="ngForm"
     *ngIf="openAddForm"
     id="add-form"

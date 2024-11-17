@@ -9,19 +9,32 @@
   <!-- ************************************************************* -->
 
   <form
+    @fadeIn
     *ngIf="openDeleteForm"
     class="d-flex general-form delete-form delete-position"
     (ngSubmit)="deleteImage()"
   >
-    <h2>Are you sure you want to delete?</h2>
-    <button
-      class="btn-style cancel-delete"
-      (click)="toggleDeleteForm()"
-      type="button"
-    >
-      Cancel
-    </button>
-    <button class="btn-style" type="submit">Delete</button>
+    <ng-container *ngIf="deleteBtn">
+      <h2>Are you sure you want to delete?</h2>
+      <button
+        class="btn-style cancel-delete"
+        (click)="toggleDeleteForm()"
+        type="button"
+      >
+        Cancel
+      </button>
+      <button class="btn-style" type="submit">Delete</button>
+    </ng-container>
+    <ng-container *ngIf="!deleteBtn">
+      <h2 @fadeIn>Deleting. Just a sec!</h2>
+      <div @fadeIn class="img-load-animation">
+        <div class="bouncing-dots">
+          <div class="dot animation"></div>
+          <div class="dot animation"></div>
+          <div class="dot animation"></div>
+        </div>
+      </div>
+    </ng-container>
   </form>
 
   <!-- ************************************************************* -->
@@ -37,17 +50,8 @@
       enctype="multipart/form-data"
       (ngSubmit)="onImageUpload()"
     >
-      <h2 class="article-title g-title">
-        Current Total: {{ storedImages.length }}
-      </h2>
+      <h2 class="article-title g-title">Current Total: {{ totalImages }}</h2>
       <div id="img-prev">
-        <!--         <img
-          *ngFor="let image of images"
-          id="upload-icon"
-          class="img-child"
-          [ngClass]="{ 'single-img': images.length === 1 }"
-          [src]="image"
-        /> -->
         <div
           *ngFor="let image of imagesToUpload"
           @fadeIn
@@ -96,7 +100,13 @@
         </button>
       </div>
     </form>
-    <div class="store-imgs d-flex">
+    <div
+      class="store-imgs d-flex"
+      infiniteScroll
+      [infiniteScrollDistance]="1.5"
+      [infiniteScrollThrottle]="750"
+      (scrolled)="addImagesOnScroll()"
+    >
       <div *ngFor="let img of storedImages" class="img-group">
         <button
           type="button"
@@ -105,7 +115,18 @@
         >
           <i class="fa-solid fa-trash fa-xl"></i>
         </button>
-        <img class="s-img" [src]="img.image" alt="stored-img" />
+        <img
+          class="s-img"
+          [src]="img.image + '?tr=w-600,h-600'"
+          alt="stored-img"
+        />
+      </div>
+      <div @fadeIn *ngIf="loading" class="img-load-animation">
+        <div class="bouncing-dots">
+          <div class="dot animation"></div>
+          <div class="dot animation"></div>
+          <div class="dot animation"></div>
+        </div>
       </div>
     </div>
   </article>

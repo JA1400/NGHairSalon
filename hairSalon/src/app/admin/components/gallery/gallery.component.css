@@ -132,50 +132,6 @@ input[type="file"] {
   color: white !important;
 }
 
-/* .circle {
-  box-sizing: border-box;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 60px;
-  aspect-ratio: 1/1;
-  border-radius: 100%;
-  background-color: var(--primary-color);
-  background: linear-gradient(
-    90deg,
-    rgba(255, 248, 241, 1) 1%,
-    rgba(189, 118, 85, 1) 25%,
-    rgba(189, 118, 85, 1) 75%,
-    rgba(255, 248, 241, 1) 100%
-  );
-  animation: spin linear 2s infinite;
-} */
-
-/* .circle::after {
-  box-sizing: border-box;
-  position: absolute;
-  content: "";
-  top: 4px;
-  left: 4px;
-  width: 52px;
-  height: 52px;
-  background: var(--primary-color);
-  border-radius: 100%; 
-  animation: spin linear 2s infinite;
-  border: 1px solid #bd7655;
-  z-index: 0;
-} */
-
-/* @keyframes spin {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-} */
-
 .single-img {
   width: 50% !important;
 }
@@ -237,6 +193,20 @@ input[type="file"] {
 
 .delete-img i {
   color: #ff0000;
+}
+
+.img-load-animation {
+  display: flex;
+  padding: 30px 0 10px 0;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  height: 15px;
+}
+
+.img-load-animation div .dot {
+  background-color: var(--third-color);
 }
 
 @media screen and (max-width: 400px) {

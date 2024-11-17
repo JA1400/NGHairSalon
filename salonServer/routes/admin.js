@@ -11,17 +11,7 @@ const {
   validateContact,
   validateTestimonial,
 } = require("../utils/validateModel");
-const multer = require("multer");
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
-
-const upload = multer({ storage: storage });
+const multer = require("../multer/index");
 
 router.put("/contact/:id", validateContact, catchAsync(contact.updateContact));
 
@@ -47,7 +37,7 @@ router.delete(
   catchAsync(testimonials.deleteSTestimonial)
 );
 
-router.post("/image", upload.single("image"), catchAsync(image.saveImage));
+router.post("/image", multer.single("image"), catchAsync(image.saveImage));
 router.delete("/image/:id", catchAsync(image.deleteImage));
 
 module.exports = router;

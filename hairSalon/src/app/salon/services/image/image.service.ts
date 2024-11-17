@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 export class ImageService {
   constructor(private httpClient: HttpClient) {}
 
-  loadServices(): Observable<Image[]> {
+  loadImages(): Observable<Image[]> {
     return this.httpClient.get<Image[]>('http://localhost:3000/image');
   }
 }

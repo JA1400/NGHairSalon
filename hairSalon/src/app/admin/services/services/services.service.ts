@@ -19,7 +19,6 @@ export class AdminServices {
     return this.httpClient
       .post('http://localhost:3000/admin/image', image)
       .pipe(
-        delay(2000),
         catchError((error) => {
           return of(null);
         })

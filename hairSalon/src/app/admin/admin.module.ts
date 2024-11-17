@@ -23,6 +23,7 @@ import { TestimonialService } from '../salon/services/testimonial/testimonial.se
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { ImageStoreItem } from '../salon/services/image/image.storeitem';
 import { ImageService } from '../salon/services/image/image.service';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ImageService } from '../salon/services/image/image.service';
     ReactiveFormsModule,
     AdminRoutingModule,
     FormsModule,
+    InfiniteScrollModule,
   ],
   providers: [
     DomService,
