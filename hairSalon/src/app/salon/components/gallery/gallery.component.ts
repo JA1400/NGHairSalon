@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomService } from '../../services/dom/dom.service';
 import { ImageStoreItem } from '../../services/image/image.storeitem';
 import { Image } from '../../types/image.type';
-import { delay, take, map, Subscription } from 'rxjs';
+import { delay, take, map, Subscription, filter } from 'rxjs';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
@@ -35,7 +35,6 @@ export class GalleryComponent implements OnInit {
   loading: boolean = true;
   reachedEnd: boolean = false;
   totalImages: number = 0;
-  initObservable: Subscription;
   constructor(
     public domService: DomService,
     public imageStoreItem: ImageStoreItem
@@ -45,38 +44,27 @@ export class GalleryComponent implements OnInit {
     const loadingTimeout = setTimeout(() => {
       this.loading = false;
     }, 5000);
-    this.imageStoreItem
-      .loadImages()
-      .then(() => {
-        this.initObservable = this.imageStoreItem.images$
-          .pipe(
-            map((images) => {
-              this.totalImages = images.length;
-              const firstThreeImages = images.slice(
-                this.startIndex,
-                this.endIndex
-              );
-              return firstThreeImages;
-            })
-          )
-          .subscribe({
-            next: (firstThreeImages) => {
-              if (firstThreeImages.length) {
-                this.visibleImages = [...firstThreeImages];
-                clearTimeout(loadingTimeout);
-                this.loading = false;
-                this.calculateNextImages();
-                this.initObservable.unsubscribe();
-              }
-            },
-            error: (error) => {
-              console.log(error);
-            },
-          });
-      })
-      .catch((e) => {
-        console.log(e);
-        this.totalImages = 0;
+    this.imageStoreItem.loadImages();
+    this.imageStoreItem.images$
+      .pipe(
+        filter((images) => images.length > 0),
+        take(1),
+        map((images) => {
+          this.totalImages = images.length;
+          const firstThreeImages = images.slice(this.startIndex, this.endIndex);
+          return firstThreeImages;
+        })
+      )
+      .subscribe({
+        next: (firstThreeImages) => {
+          this.visibleImages = [...firstThreeImages];
+          clearTimeout(loadingTimeout);
+          this.loading = false;
+          this.calculateNextImages();
+        },
+        error: (error) => {
+          console.log(error);
+        },
       });
   }
 
@@ -84,23 +72,26 @@ export class GalleryComponent implements OnInit {
     if (!this.totalImages) return;
     if (this.reachedEnd) return;
     this.loading = true;
-    this.initObservable = this.imageStoreItem.images$
+    this.imageStoreItem.images$
       .pipe(
         take(1),
         delay(500),
         map((images) => {
-          const firstThreeImages = images.slice(this.startIndex, this.endIndex);
-          return firstThreeImages;
+          if (images.length !== this.totalImages)
+            this.totalImages = images.length;
+          return images.slice(this.startIndex, this.endIndex);
         })
       )
       .subscribe({
         next: (firstThreeImages) => {
           this.visibleImages = [...this.visibleImages, ...firstThreeImages];
-          this.loading = false;
-          this.calculateNextImages();
         },
         error: (error) => {
           console.log(error);
+        },
+        complete: () => {
+          this.loading = false;
+          this.calculateNextImages();
         },
       });
   }

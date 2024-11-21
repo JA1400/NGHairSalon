@@ -4,6 +4,7 @@ import { AdminServices } from '../../services/services/services.service';
 import {
   concatMap,
   delay,
+  filter,
   finalize,
   from,
   map,
@@ -86,6 +87,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.imageStoreItem.loadImages();
     this.imageStoreItem.images$
       .pipe(
+        filter((images) => images.length > 0),
+        take(1),
         map((images) => {
           this.totalImages = images.length;
           const firstFourImages = images.slice(this.startIndex, this.endIndex);
@@ -94,11 +97,9 @@ export class GalleryComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (firstFourImages) => {
-          if (firstFourImages.length) {
-            this.storedImages = [...firstFourImages];
-            this.toggleLoading();
-            this.calculateNextImages();
-          }
+          this.storedImages = [...firstFourImages];
+          this.toggleLoading();
+          this.calculateNextImages();
         },
         error: (error) => {
           this.actionMessage = 'Error Loading Images!';
@@ -107,14 +108,18 @@ export class GalleryComponent implements OnInit, OnDestroy {
   }
 
   addImagesOnScroll(): void {
-    console.log(this.totalImages);
     if (!this.totalImages) return;
     if (this.reachedEnd) return;
+    console.log('Loaded more images');
     this.toggleLoading();
     this.imageStoreItem.images$
       .pipe(
         take(1),
-        map((images) => images.slice(this.startIndex, this.endIndex))
+        map((images) => {
+          if (images.length !== this.totalImages)
+            this.totalImages = images.length;
+          return images.slice(this.startIndex, this.endIndex);
+        })
       )
       .subscribe({
         next: (nextFourImages) => {
@@ -143,7 +148,6 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   toggleLoading(): void {
     this.loading = !this.loading;
-    console.log(this.loading);
   }
 
   toggleAnimation(image: ImageToUpload): void {
