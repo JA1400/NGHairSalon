@@ -89,45 +89,6 @@ input[type="file"] {
   border-radius: 15px;
 }
 
-.bouncing-dots {
-  display: flex;
-  justify-content: space-between;
-  width: 4rem;
-}
-
-.dot {
-  width: 15px;
-  height: 15px;
-  background-color: var(--primary-color);
-  border-radius: 50%;
-}
-
-.dot:nth-child(1) {
-  animation-delay: 0s;
-}
-
-.dot:nth-child(2) {
-  animation-delay: 0.3s;
-}
-
-.dot:nth-child(3) {
-  animation-delay: 0.6s;
-}
-
-.animation {
-  animation: bounce 1.5s infinite;
-}
-
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
 .img-overlay i {
   color: white !important;
 }

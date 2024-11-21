@@ -1,16 +1,14 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomService } from '../../services/dom/dom.service';
 import { ContactStoreItem } from '../../services/contact/contact.storeitem';
 import { ContactInfo } from '../../types/contact.type';
-import { Subject, takeUntil } from 'rxjs';
+import { finalize, Subject, take, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css'],
 })
-export class FooterComponent implements OnDestroy {
-  private destroy$ = new Subject<void>();
-
+export class FooterComponent implements OnInit {
   footerInfo: ContactInfo = {
     phone: '',
     address: '',
@@ -20,16 +18,11 @@ export class FooterComponent implements OnDestroy {
   constructor(
     public domService: DomService,
     public contatcStoreItem: ContactStoreItem
-  ) {
-    this.contatcStoreItem.contactInfo$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((info) => {
-        this.footerInfo = info;
-      });
-  }
+  ) {}
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  ngOnInit(): void {
+    this.contatcStoreItem.contactInfo$.pipe(take(2)).subscribe((contact) => {
+      this.footerInfo = contact;
+    });
   }
 }

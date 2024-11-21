@@ -6,7 +6,13 @@
   <section class="hero-banner hero-4 d-flex">
     <h1 class="hero-title">Gallery</h1>
   </section>
-  <article class="general-article d-flex b">
+  <article
+    infiniteScroll
+    [infiniteScrollDistance]="1.25"
+    [infiniteScrollThrottle]="750"
+    (scrolled)="addImagesOnScroll()"
+    class="general-article d-flex b"
+  >
     <h4 class="subhead-text no-margin w-90">Photos</h4>
     <h2 class="head-title no-margin w-90">
       See Some of <br id="mobile-b" />
@@ -19,30 +25,33 @@
       est ultricies integer quis.
     </p>
 
-    <!-- src="<%= img.image %><%= size %>" -->
-    <!--     <section class="gallery-img w-90">
-      <img
-        (click)="this.domService.fullScreenImg($event.target)"
-        class="g-prev-img"
-        src="../../../../assets/images/image21.jpg"
-        alt="gallery-image"
-      />
-    </section> -->
     <ng-container *ngFor="let image of visibleImages">
       <section
+        @fadeIn
         class="gallery-img w-90 blur-load"
         style="background-color: #bd7655"
       >
         <img
           (click)="this.domService.fullScreenImg($event.target)"
           class="g-prev-img lazy"
-          [src]="image.image"
+          [src]="image.image + '?tr=w-1000'"
           alt="gallery-image"
         />
       </section>
     </ng-container>
 
+    <ng-container *ngIf="loading">
+      <div class="img-load-animation gallery-load">
+        <div class="bouncing-dots">
+          <div class="dot animation"></div>
+          <div class="dot animation"></div>
+          <div class="dot animation"></div>
+        </div>
+      </div>
+    </ng-container>
+
     <button
+      *ngIf="false"
       (click)="loadMore()"
       class="btn-style d-flex"
       [disabled]="disableBtn"
@@ -71,7 +80,7 @@
     </button>
   </article>
 </main>
-<aside *ngIf="this.domService.displayFullScreen" class="full-screen-w">
+<aside @fadeIn *ngIf="this.domService.displayFullScreen" class="full-screen-w">
   <button
     (click)="this.domService.closeFullScreen()"
     class="close-w-btn d-flex"

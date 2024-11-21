@@ -22,7 +22,7 @@ export class DomService implements OnDestroy {
   }
 
   toggleOverflow(bool: boolean): void {
-    document.body.style.overflow = bool ? 'hidden' : 'auto';
+    document.body.style.overflowY = bool ? 'hidden' : 'auto';
   }
 
   toggleMenu(): void {

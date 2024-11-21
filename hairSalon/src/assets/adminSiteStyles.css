@@ -53,11 +53,12 @@
 .general-form {
   box-sizing: border-box;
   position: absolute;
-  left: 50%;
+  left: 50vw;
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
-  width: 90%;
+  width: calc(100% - 2.8rem);
+  max-width: var(--max-width-val);
   background-color: white;
   border: 1px solid #bd7655;
   border-radius: 10px;
@@ -361,6 +362,4 @@
 
 .delete-position {
   position: fixed !important;
-  top: 50%;
-  left: 50%;
 }

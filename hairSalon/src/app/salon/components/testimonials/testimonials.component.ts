@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomService } from '../../services/dom/dom.service';
 import { Testimonial } from '../../types/testimonial.type';
 import { TestimonialStoreItem } from '../../services/testimonial/testimonial.storeitem';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-testimonials',
@@ -11,16 +12,22 @@ import { TestimonialStoreItem } from '../../services/testimonial/testimonial.sto
     '../../../../assets/mainSiteStyles.css',
   ],
 })
-export class TestimonialsComponent {
+export class TestimonialsComponent implements OnInit, OnDestroy {
   sTestimonials: Testimonial[] = [];
   currentIndex: number = 0;
+  testimonialsObservable: Subscription;
   constructor(
     public domService: DomService,
     private testimonialStoreItem: TestimonialStoreItem
-  ) {
-    this.testimonialStoreItem.storedTestimonials$.subscribe((testimonials) => {
-      this.sTestimonials = testimonials;
-    });
+  ) {}
+
+  ngOnInit(): void {
+    this.testimonialsObservable =
+      this.testimonialStoreItem.storedTestimonials$.subscribe(
+        (testimonials) => {
+          this.sTestimonials = testimonials;
+        }
+      );
   }
 
   nextSlide(): void {
@@ -37,5 +44,9 @@ export class TestimonialsComponent {
     } else {
       this.currentIndex--;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.testimonialsObservable.unsubscribe();
   }
 }

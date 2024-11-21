@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomService } from '../../services/dom/dom.service';
-import {
-  FormBuilder,
-  FormGroup,
-  AbstractControl,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InquiryService } from '../../services/inquiry/inquiry.service';
 import { Inquiry } from '../../types/inquiry.type';
+import { ContactStoreItem } from '../../services/contact/contact.storeitem';
+import { ContactInfo } from '../../types/contact.type';
+import { Observable, Subscription, take } from 'rxjs';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-contact',
@@ -16,13 +15,33 @@ import { Inquiry } from '../../types/inquiry.type';
     './contact.component.css',
     '../../../../assets/mainSiteStyles.css',
   ],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('150ms ease-in-out', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate('150ms ease-in-out', style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
-export class ContactComponent implements OnInit {
+export class ContactComponent implements OnInit, OnDestroy {
   inquiryForm: FormGroup;
   alertMsg: string = '';
+  contactObservable: Subscription;
+  footerInfo: ContactInfo = {
+    phone: '',
+    address: '',
+    email: '',
+  };
+
   constructor(
     public domService: DomService,
     private inquiryService: InquiryService,
+    private contactStoreItem: ContactStoreItem,
     private fB: FormBuilder
   ) {}
 
@@ -33,6 +52,12 @@ export class ContactComponent implements OnInit {
       subject: ['', Validators.required],
       message: ['', Validators.required],
     });
+
+    this.contactObservable = this.contactStoreItem.contactInfo$.subscribe(
+      (contact) => {
+        this.footerInfo = contact;
+      }
+    );
   }
   onSubmit(): void {
     const inquiry: Inquiry = {
@@ -50,5 +75,9 @@ export class ContactComponent implements OnInit {
         }
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    this.contactObservable.unsubscribe();
   }
 }
