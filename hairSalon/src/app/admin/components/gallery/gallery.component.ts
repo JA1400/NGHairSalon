@@ -1,7 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomService } from 'src/app/salon/services/dom/dom.service';
 import { AdminServices } from '../../services/services/services.service';
-import { concatMap, delay, finalize, from, map, Observable, take } from 'rxjs';
+import {
+  concatMap,
+  delay,
+  finalize,
+  from,
+  map,
+  Observable,
+  Subscription,
+  take,
+} from 'rxjs';
 import { Image } from 'src/app/salon/types/image.type';
 import { ImageStoreItem } from 'src/app/salon/services/image/image.storeitem';
 import { trigger, transition, style, animate } from '@angular/animations';
@@ -24,11 +33,11 @@ interface ImageToUpload {
     trigger('fadeIn', [
       transition(':enter', [
         style({ opacity: 0 }),
-        animate('200ms ease-in-out', style({ opacity: 1 })),
+        animate('150ms ease-in-out', style({ opacity: 1 })),
       ]),
       transition(':leave', [
         style({ opacity: 1 }),
-        animate('200ms ease-in-out', style({ opacity: 0 })),
+        animate('150ms ease-in-out', style({ opacity: 0 })),
       ]),
     ]),
     trigger('fadeAndSlide', [
@@ -49,7 +58,7 @@ interface ImageToUpload {
     ]),
   ],
 })
-export class GalleryComponent implements OnInit {
+export class GalleryComponent implements OnInit, OnDestroy {
   fileInput = new FormControl({ value: null, disabled: false });
   openDeleteForm: boolean = false;
   enableUploadBtn: boolean = false;
@@ -60,12 +69,13 @@ export class GalleryComponent implements OnInit {
   storedImages: Image[];
   selectedFiles: FileList;
   imagesToUpload: ImageToUpload[] = [];
+  imagesObservable: Subscription;
   reachedEnd: boolean = false;
   loading: boolean = true;
   totalImages: number = 0;
   startIndex: number = 0;
   endIndex: number = 4;
-
+  times: number = 0;
   constructor(
     public domService: DomService,
     private imageStoreItem: ImageStoreItem,
@@ -73,42 +83,32 @@ export class GalleryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.imageStoreItem
-      .loadImages()
-      .then(() => {
-        this.imageStoreItem.images$
-          .pipe(
-            delay(500),
-            take(2),
-            map((images) => {
-              this.totalImages = images.length;
-              const firstFourImages = images.slice(
-                this.startIndex,
-                this.endIndex
-              );
-              return firstFourImages;
-            })
-          )
-          .subscribe({
-            next: (firstFourImages) => {
-              this.storedImages = [...firstFourImages];
-            },
-            error: (error) => {
-              this.actionMessage = 'Error Loading Images!';
-            },
-            complete: () => {
-              this.toggleLoading();
-              this.calculateNextImages();
-            },
-          });
-      })
-      .catch(() => {
-        this.actionMessage = 'Error Loading Images!';
-        this.totalImages = 0;
+    this.imageStoreItem.loadImages();
+    this.imageStoreItem.images$
+      .pipe(
+        map((images) => {
+          this.totalImages = images.length;
+          const firstFourImages = images.slice(this.startIndex, this.endIndex);
+          return firstFourImages;
+        })
+      )
+      .subscribe({
+        next: (firstFourImages) => {
+          if (firstFourImages.length) {
+            this.storedImages = [...firstFourImages];
+            this.toggleLoading();
+            this.calculateNextImages();
+          }
+        },
+        error: (error) => {
+          this.actionMessage = 'Error Loading Images!';
+        },
       });
   }
 
   addImagesOnScroll(): void {
+    console.log(this.totalImages);
+    if (!this.totalImages) return;
     if (this.reachedEnd) return;
     this.toggleLoading();
     this.imageStoreItem.images$
@@ -282,5 +282,10 @@ export class GalleryComponent implements OnInit {
           this.toggleDeleteBtn();
         },
       });
+  }
+  ngOnDestroy(): void {
+    this.totalImages = 0;
+    this.imagesObservable;
+    console.log('Destroy');
   }
 }

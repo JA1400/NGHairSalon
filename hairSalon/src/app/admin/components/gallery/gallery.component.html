@@ -63,9 +63,9 @@
             class="img-overlay d-flex"
           >
             <div @fadeAndSlide *ngIf="image.uploading" class="bouncing-dots">
-              <div class="dot animation"></div>
-              <div class="dot animation"></div>
-              <div class="dot animation"></div>
+              <div class="dot dot-white animation"></div>
+              <div class="dot dot-white animation"></div>
+              <div class="dot dot-white animation"></div>
             </div>
             <i
               @fadeAndSlide
@@ -104,7 +104,7 @@
       class="store-imgs d-flex"
       infiniteScroll
       [infiniteScrollDistance]="1.5"
-      [infiniteScrollThrottle]="750"
+      [infiniteScrollThrottle]="500"
       (scrolled)="addImagesOnScroll()"
     >
       <div *ngFor="let img of storedImages" class="img-group">

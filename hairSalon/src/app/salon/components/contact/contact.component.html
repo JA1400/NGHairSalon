@@ -54,10 +54,7 @@
 
     <!-- ************************************************** -->
     <ng-template #sentTemplate
-      ><h2
-        *ngIf="alertMsg === 'success'"
-        class="head-title no-margin w-90 fade"
-      >
+      ><h2 *ngIf="alertMsg === 'success'" class="head-title no-margin w-90">
         Message Sent!
       </h2>
     </ng-template>
@@ -70,7 +67,7 @@
     </h2>
 
     <ng-template #sentMsg>
-      <i class="fa-solid fa-envelope-circle-check fa-6x fade"></i>
+      <i @fadeIn class="fa-solid fa-envelope-circle-check fa-6x"></i>
     </ng-template>
     <figure *ngIf="alertMsg === 'success'" class="icon-img">
       <ng-container *ngTemplateOutlet="sentMsg"></ng-container>
@@ -114,10 +111,6 @@
         Send Message
       </button>
     </form>
-
-    <h4 *ngIf="alertMsg === 'success'" class="subhead-text no-margin w-90">
-      Message Sent!
-    </h4>
     <button
       (click)="this.domService.scrollToTop()"
       id="to-top-btn"

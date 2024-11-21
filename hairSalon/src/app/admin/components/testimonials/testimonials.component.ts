@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomService } from 'src/app/salon/services/dom/dom.service';
 import { TestimonialStoreItem } from 'src/app/salon/services/testimonial/testimonial.storeitem';
 import { PendingTestimonialStoreItem } from '../../services/testimonials/pendingtestimonial.storeitem';
 import { Testimonial } from 'src/app/salon/types/testimonial.type';
 import { TestimonialTwo } from 'src/app/salon/types/testimonialTwo.type';
-import { map, take } from 'rxjs';
+import { delay, map, Subscription, take } from 'rxjs';
 import { AdminServices } from '../../services/services/services.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-testimonials',
@@ -14,14 +15,30 @@ import { AdminServices } from '../../services/services/services.service';
     './testimonials.component.css',
     '../../../../assets/adminSiteStyles.css',
   ],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('200ms ease-in-out', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate('200ms ease-in-out', style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
-export class TestimonialsComponent implements OnInit {
+export class TestimonialsComponent implements OnInit, OnDestroy {
   openDeleteForm: boolean = false;
   editPendingTesti: boolean = true;
+  emptyTestimonials: boolean = false;
+  loading: boolean = true;
   testimonialToDelete?: string;
   testimonialDeleteType: number;
   storedTestimonials: Testimonial[];
   pendingTestimonials: TestimonialTwo[];
+  sTestimonialObservable: Subscription;
+  pTestimonialObservable: Subscription;
   actionMessage: string = '';
   constructor(
     public domService: DomService,
@@ -34,11 +51,21 @@ export class TestimonialsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sTestimonials.storedTestimonials$.subscribe((sTestimonials) => {
-      this.storedTestimonials = sTestimonials;
-    });
-
-    this.pTestimonials.pendingTestimonials$
+    let loadingTimeout = setTimeout(() => {
+      this.loading = false;
+      this.emptyTestimonials = true;
+    }, 2000);
+    this.sTestimonialObservable = this.sTestimonials.storedTestimonials$
+      .pipe(delay(500))
+      .subscribe((sTestimonials) => {
+        this.storedTestimonials = sTestimonials;
+        if (sTestimonials.length) {
+          clearTimeout(loadingTimeout);
+          this.loading = false;
+          this.emptyTestimonials = false;
+        }
+      });
+    this.pTestimonialObservable = this.pTestimonials.pendingTestimonials$
       .pipe(map((data) => data.map((item) => ({ ...item, isValid: false }))))
       .subscribe((newArray) => (this.pendingTestimonials = newArray));
   }
@@ -121,5 +148,10 @@ export class TestimonialsComponent implements OnInit {
           this.actionMessage = e.error.message;
         },
       });
+  }
+
+  ngOnDestroy(): void {
+    this.pTestimonialObservable.unsubscribe();
+    this.sTestimonialObservable.unsubscribe();
   }
 }

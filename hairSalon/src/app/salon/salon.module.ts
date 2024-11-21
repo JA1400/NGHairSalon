@@ -22,6 +22,8 @@ import { ImageService } from './services/image/image.service';
 import { ImageStoreItem } from './services/image/image.storeitem';
 import { InquiryService } from './services/inquiry/inquiry.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
 @NgModule({
   declarations: [
     SalonComponent,
@@ -39,6 +41,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     SalonRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    InfiniteScrollModule,
   ],
   providers: [
     DomService,

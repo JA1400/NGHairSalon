@@ -6,6 +6,7 @@
   <!-- ************************************************************* -->
 
   <form
+    @fadeIn
     *ngIf="openDeleteForm"
     id="delete-form"
     class="d-flex general-form delete-form delete-position"
@@ -115,7 +116,21 @@
     </button>
   </article>
   <article
-    *ngIf="!storedTestimonials.length"
+    id="load-padding"
+    @fadeIn
+    *ngIf="loading"
+    class="d-flex article-container"
+  >
+    <div class="img-load-animation">
+      <div class="bouncing-dots">
+        <div class="dot dot-third animation"></div>
+        <div class="dot dot-third animation"></div>
+        <div class="dot dot-third animation"></div>
+      </div>
+    </div>
+  </article>
+  <article
+    *ngIf="emptyTestimonials"
     class="d-flex article-container empty-inquiry"
   >
     <h2 class="article-title">No Testimonials on Website!</h2>

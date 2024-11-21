@@ -152,7 +152,7 @@
     </button>
   </article>
 </main>
-<aside *ngIf="this.domService.displayFullScreen" class="full-screen-w">
+<aside @fadeIn *ngIf="this.domService.displayFullScreen" class="full-screen-w">
   <button
     class="close-w-btn d-flex"
     (click)="this.domService.closeFullScreen()"
