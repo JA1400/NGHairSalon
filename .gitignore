@@ -3,5 +3,6 @@ hairSalon/.vscode
 hairSalon/.node_modules
 hairSalon/ dist
 node_modules
-salonServer/.env
-salonServer/id_rsa_priv.pem
+salonServer/ .env
+salonServer/ id_rsa_priv.pem
+salonServer/ id_rsa_pub.pem
