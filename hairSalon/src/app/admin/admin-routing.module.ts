@@ -5,10 +5,12 @@ import { InfoComponent } from './components/info/info.component';
 import { InquiriesComponent } from './components/inquiries/inquiries.component';
 import { TestimonialsComponent } from './components/testimonials/testimonials.component';
 import { GalleryComponent } from './components/gallery/gallery.component';
+import { AdminGuard } from '../services/admin.guard';
 const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
+    canActivateChild: [AdminGuard],
     children: [
       {
         path: 'info',

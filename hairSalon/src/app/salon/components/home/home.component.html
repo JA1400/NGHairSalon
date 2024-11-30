@@ -122,9 +122,21 @@
       </div>
 
       <div style="text-align: center">
-        <span class="dot" (click)="showSlide(0)"></span>
-        <span class="dot" (click)="showSlide(1)"></span>
-        <span class="dot" (click)="showSlide(2)"></span>
+        <span
+          class="dot"
+          [style.backgroundColor]="visibleSlides[0] ? '#717171' : ''"
+          (click)="showSlide(0)"
+        ></span>
+        <span
+          class="dot"
+          [style.backgroundColor]="visibleSlides[1] ? '#717171' : ''"
+          (click)="showSlide(1)"
+        ></span>
+        <span
+          class="dot"
+          [style.backgroundColor]="visibleSlides[2] ? '#717171' : ''"
+          (click)="showSlide(2)"
+        ></span>
       </div>
     </section>
   </article>

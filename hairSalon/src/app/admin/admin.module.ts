@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminComponent } from './admin.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminNavbarComponent } from './components/navbar/navbar.component';
@@ -24,6 +24,7 @@ import { GalleryComponent } from './components/gallery/gallery.component';
 import { ImageStoreItem } from '../salon/services/image/image.storeitem';
 import { ImageService } from '../salon/services/image/image.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { AuthInterceptor } from '../login/interceptors/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,11 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     InfiniteScrollModule,
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
     DomService,
     ContactService,
     ContactStoreItem,

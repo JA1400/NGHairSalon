@@ -59,7 +59,7 @@ interface ImageToUpload {
     ]),
   ],
 })
-export class GalleryComponent implements OnInit, OnDestroy {
+export class GalleryComponent implements OnInit {
   fileInput = new FormControl({ value: null, disabled: false });
   openDeleteForm: boolean = false;
   enableUploadBtn: boolean = false;
@@ -110,7 +110,6 @@ export class GalleryComponent implements OnInit, OnDestroy {
   addImagesOnScroll(): void {
     if (!this.totalImages) return;
     if (this.reachedEnd) return;
-    console.log('Loaded more images');
     this.toggleLoading();
     this.imageStoreItem.images$
       .pipe(
@@ -248,7 +247,6 @@ export class GalleryComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (result) => {
-          console.log(result);
           this.toggleComplete(this.imagesToUpload[index]);
           this.actionMessage = `${result.message} ${index + 1} Image(s)`;
           index++;
@@ -286,10 +284,5 @@ export class GalleryComponent implements OnInit, OnDestroy {
           this.toggleDeleteBtn();
         },
       });
-  }
-  ngOnDestroy(): void {
-    this.totalImages = 0;
-    this.imagesObservable;
-    console.log('Destroy');
   }
 }

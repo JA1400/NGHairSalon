@@ -1,0 +1,61 @@
+<main class="login-container d-flex">
+  <article id="login-top-piece" class="d-flex">
+    <div class="login-logo d-flex">
+      <p>Logo</p>
+    </div>
+  </article>
+
+  <article id="login-bottom-piece" class="d-flex">
+    <section class="login-header">
+      <h1 id="login-title">Log In</h1>
+      <h3 id="title-subtext">Please sign in to continue</h3>
+    </section>
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="onLogin()"
+      id="login-form"
+      class="d-flex validated-form"
+    >
+      <div *ngIf="actionMessage" class="login-flash" role="alert">
+        {{ actionMessage }}
+      </div>
+      <label for="email">Email</label>
+      <input
+        [ngClass]="
+          loginForm.controls['email'].invalid &&
+          loginForm.controls['email'].touched
+            ? 'invalid-field'
+            : 'valid-field'
+        "
+        class="login-field"
+        type="text"
+        id="email"
+        formControlName="email"
+      />
+      <label for="password">Password</label>
+      <input
+        [ngClass]="
+          loginForm.controls['password'].invalid &&
+          loginForm.controls['password'].touched
+            ? 'invalid-field'
+            : 'valid-field'
+        "
+        class="login-field"
+        type="password"
+        id="password"
+        formControlName="password"
+      />
+      <div class="l-f-btn d-flex">
+        <button [disabled]="loginForm.invalid" class="btn-style" type="submit">
+          Log In
+        </button>
+      </div>
+    </form>
+    <footer class="login-footer d-flex">
+      <h4>
+        Copyright @2023 Kitty’s Hair & Makeup Salon | All Rights Reserved |
+        Website design by JAC Solutions
+      </h4>
+    </footer>
+  </article>
+</main>
