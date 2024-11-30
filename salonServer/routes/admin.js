@@ -11,33 +11,73 @@ const {
   validateContact,
   validateTestimonial,
 } = require("../utils/validateModel");
+const passport = require("passport");
 const multer = require("../multer/index");
 
-router.put("/contact/:id", validateContact, catchAsync(contact.updateContact));
+router.put(
+  "/contact/:id",
+  passport.authenticate("jwt", { session: false }),
+  validateContact,
+  catchAsync(contact.updateContact)
+);
 
-router.post("/services", validateService, catchAsync(service.addService));
-router.put("/services/:id", validateService, catchAsync(service.updateService));
-router.delete("/services/:id", catchAsync(service.deleteService));
+router.post(
+  "/services",
+  passport.authenticate("jwt", { session: false }),
+  validateService,
+  catchAsync(service.addService)
+);
+router.put(
+  "/services/:id",
+  passport.authenticate("jwt", { session: false }),
+  validateService,
+  catchAsync(service.updateService)
+);
+router.delete(
+  "/services/:id",
+  passport.authenticate("jwt", { session: false }),
+  catchAsync(service.deleteService)
+);
 
-router.get("/inquiry", catchAsync(inquiry.getInquiries));
-router.delete("/inquiry/:id", catchAsync(inquiry.deleteInquiry));
+router.get(
+  "/inquiry",
+  passport.authenticate("jwt", { session: false }),
+  catchAsync(inquiry.getInquiries)
+);
+router.delete(
+  "/inquiry/:id",
+  passport.authenticate("jwt", { session: false }),
+  catchAsync(inquiry.deleteInquiry)
+);
 
-router.get("/testimonials", catchAsync(testimonials.getPendingTestimonials));
+router.get(
+  "/testimonials",
+  passport.authenticate("jwt", { session: false }),
+  catchAsync(testimonials.getPendingTestimonials)
+);
 router.put(
   "/testimonials",
+  passport.authenticate("jwt", { session: false }),
   validateTestimonial,
   catchAsync(testimonials.storeTestimonial)
 );
 router.delete(
   "/pendingtestimonials/:id",
+  passport.authenticate("jwt", { session: false }),
   catchAsync(testimonials.deleteTestimonial)
 );
 router.delete(
   "/storedtestimonials/:id",
+  passport.authenticate("jwt", { session: false }),
   catchAsync(testimonials.deleteSTestimonial)
 );
 
-router.post("/image", multer.single("image"), catchAsync(image.saveImage));
+router.post(
+  "/image",
+  passport.authenticate("jwt", { session: false }),
+  multer.single("image"),
+  catchAsync(image.saveImage)
+);
 router.delete("/image/:id", catchAsync(image.deleteImage));
 
 module.exports = router;

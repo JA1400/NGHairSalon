@@ -1,5 +1,6 @@
 hairSalon/.angular
 hairSalon/.vscode
 hairSalon/.node_modules
+hairSalon/ dist
 node_modules
 salonServer/.env

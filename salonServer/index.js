@@ -6,13 +6,17 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const mainRoutes = require("./routes/main");
 const adminRoutes = require("./routes/admin");
+const userRoutes = require("./routes/users");
 const dbUrl = process.env.DB_URL;
 const port = process.env.PORT;
 const mongoSanitize = require("express-mongo-sanitize");
-const Testimonial = require("./models/testimonial");
 const xss = require("xss");
-const sTestimonial = require("./models/storedTestimonial");
-const Inquiry = require("./models/inquiry");
+const cookieParser = require("cookie-parser");
+const passport = require("passport");
+
+require("./config/passport")(passport);
+require("./models/user");
+/* "mongodb://localhost:27017" */
 mongoose
   .connect(dbUrl)
   .then(() => {
@@ -23,8 +27,10 @@ mongoose
     console.log(err);
   });
 
+app.use(passport.initialize());
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(mongoSanitize());
 app.use((req, res, next) => {
@@ -36,14 +42,16 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/create", async (req, res) => {
-  /*   const testi = new Inquiry({
+app.use(cookieParser());
+
+/* app.get("/create", async (req, res) => { */
+/*   const testi = new Inquiry({
     name: "Test",
     email: "test@test",
     message: "test",
   });
   await testi.save(); */
-  const testi = new Testimonial({
+/*   const testi = new Testimonial({
     name: "Agatha",
     email: "agathe@gmail.com",
     message: "This is a pending testimonials",
@@ -51,7 +59,7 @@ app.get("/create", async (req, res) => {
 
   await testi.save();
   res.status(200).send(testi);
-});
+}); */
 
 /* app.post("/uploadImage", upload.single("image"), (req, res) => {
   console.log(req.file);
@@ -60,6 +68,7 @@ app.get("/create", async (req, res) => {
  */
 app.use("/", mainRoutes);
 app.use("/admin", adminRoutes);
+app.use("/admin", userRoutes);
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message = "Something went wrong" } = err;
