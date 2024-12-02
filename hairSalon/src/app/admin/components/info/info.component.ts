@@ -41,7 +41,6 @@ export class InfoComponent implements OnInit {
   openDeleteForm: boolean = false;
   openAddForm: boolean = false;
   serviceToDelete?: string;
-  actionMessage: string = 'Welcome Back';
   addServiceForm: any = {
     title: '',
     price: null,
@@ -146,10 +145,10 @@ export class InfoComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (result) => {
-          this.actionMessage = result.message;
+          this.domService.actionMessage = result.message;
         },
         error: (e) => {
-          this.actionMessage = e.error.message;
+          this.domService.actionMessage = e.error.message;
         },
       });
 
@@ -188,7 +187,7 @@ export class InfoComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (result) => {
-          this.actionMessage = result.message;
+          this.domService.actionMessage = result.message;
           const service: ServiceTwo = { ...result.service, isValid: false };
           this.services = [...this.services, service];
         },
@@ -206,10 +205,10 @@ export class InfoComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (result) => {
-          this.actionMessage = result.message;
+          this.domService.actionMessage = result.message;
         },
         error: (e) => {
-          this.actionMessage = e.error.message;
+          this.domService.actionMessage = e.error.message;
         },
       });
     this.toggleDeleteForm();
@@ -225,11 +224,11 @@ export class InfoComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (result) => {
-          this.actionMessage = result.message;
+          this.domService.actionMessage = result.message;
           this.services[serviceIndex].isValid = false;
         },
         error: (e) => {
-          this.actionMessage = e.error.message;
+          this.domService.actionMessage = e.error.message;
         },
       });
     this.domService.scrollToTop();

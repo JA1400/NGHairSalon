@@ -90,8 +90,8 @@
   <!-- ************************************************************* -->
 
   <h1 id="page-title">Business Info</h1>
-  <div *ngIf="actionMessage" class="flash-message" role="alert">
-    {{ actionMessage }}
+  <div *ngIf="domService.actionMessage" class="flash-message" role="alert">
+    {{ domService.actionMessage }}
   </div>
   <article class="d-flex article-container" id="contact-contianer">
     <h2 class="article-title">Contact</h2>

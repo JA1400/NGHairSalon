@@ -65,7 +65,6 @@ export class GalleryComponent implements OnInit {
   enableUploadBtn: boolean = false;
   disableChooseBtn: boolean = false;
   deleteBtn: boolean = true;
-  actionMessage: string = '';
   imageToDelete?: string = '';
   storedImages: Image[];
   selectedFiles: FileList;
@@ -102,7 +101,7 @@ export class GalleryComponent implements OnInit {
           this.calculateNextImages();
         },
         error: (error) => {
-          this.actionMessage = 'Error Loading Images!';
+          this.domService.actionMessage = 'Error Loading Images!';
         },
       });
   }
@@ -125,7 +124,7 @@ export class GalleryComponent implements OnInit {
           this.storedImages = [...this.storedImages, ...nextFourImages];
         },
         error: (error) => {
-          this.actionMessage = 'Error Loading Images!';
+          this.domService.actionMessage = 'Error Loading Images!';
         },
         complete: () => {
           this.calculateNextImages();
@@ -248,13 +247,14 @@ export class GalleryComponent implements OnInit {
       .subscribe({
         next: (result) => {
           this.toggleComplete(this.imagesToUpload[index]);
-          this.actionMessage = `${result.message} ${index + 1} Image(s)`;
+          this.domService.actionMessage = `${result.message} ${
+            index + 1
+          } Image(s)`;
           index++;
           this.storedImages = [...this.storedImages, result.image];
         },
         error: (error) => {
           console.log(error);
-          /* this.actionMessage = error.error.message; */
         },
         complete: () => {},
       });
@@ -273,11 +273,11 @@ export class GalleryComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (result: any) => {
-          this.actionMessage = result.message;
+          this.domService.actionMessage = result.message;
           this.filterImageOut(this.imageToDelete);
         },
         error: (e) => {
-          this.actionMessage = e.error.message;
+          this.domService.actionMessage = e.error.message;
         },
         complete: () => {
           this.toggleDeleteForm();

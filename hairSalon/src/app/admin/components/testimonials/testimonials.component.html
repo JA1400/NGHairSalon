@@ -26,8 +26,8 @@
   <!-- ************************************************************* -->
 
   <h1 id="page-title">Testimonials</h1>
-  <div *ngIf="actionMessage" class="flash-message" role="alert">
-    {{ actionMessage }}
+  <div *ngIf="domService.actionMessage" class="flash-message" role="alert">
+    {{ domService.actionMessage }}
   </div>
   <form
     *ngFor="let testimonial of pendingTestimonials; let i = index"

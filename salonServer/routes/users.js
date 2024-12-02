@@ -42,7 +42,6 @@ router.post("/login", function (req, res, next) {
       });
     })
     .catch((err) => {
-      console.log(err);
       return res.status(500).send({ message: "Error Occourred!" });
     });
 });
@@ -71,7 +70,6 @@ router.post("/register", function (req, res, next) {
       });
     })
     .catch((err) => {
-      console.log(err);
       res.status(400).send({ error: err });
     });
 });

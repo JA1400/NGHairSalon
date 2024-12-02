@@ -8,8 +8,10 @@ export class DomService implements OnDestroy {
   displayFullScreen: boolean = false;
   imgSrc: string = '';
   subscriptions: Subscription = new Subscription();
+  actionMessage: string = '';
 
   constructor(private router: Router) {
+    let firstLoad = true;
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
@@ -18,6 +20,11 @@ export class DomService implements OnDestroy {
         document.body.style.overflow = 'auto';
         this.imgSrc = '';
         this.scrollToTop();
+        this.actionMessage = '';
+        if (firstLoad) {
+          this.actionMessage = 'Welcome Back!';
+          firstLoad = false;
+        }
       });
   }
 
