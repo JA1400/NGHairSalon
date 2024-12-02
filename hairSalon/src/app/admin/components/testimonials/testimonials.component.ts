@@ -39,7 +39,6 @@ export class TestimonialsComponent implements OnInit, OnDestroy {
   pendingTestimonials: TestimonialTwo[];
   sTestimonialObservable: Subscription;
   pTestimonialObservable: Subscription;
-  actionMessage: string = '';
   constructor(
     public domService: DomService,
     private sTestimonials: TestimonialStoreItem,
@@ -123,7 +122,7 @@ export class TestimonialsComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe({
         next: (result) => {
-          this.actionMessage = result.message;
+          this.domService.actionMessage = result.message;
           this.addToStoredTestimonial(result.testimonial);
           this.removePendingTestimonial(index);
           this.filterDeletedTestimonial(0);
@@ -140,12 +139,12 @@ export class TestimonialsComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe({
         next: (result) => {
-          this.actionMessage = result.message;
+          this.domService.actionMessage = result.message;
           this.filterDeletedTestimonial(this.testimonialDeleteType);
           this.toggleDeleteForm();
         },
         error: (e) => {
-          this.actionMessage = e.error.message;
+          this.domService.actionMessage = e.error.message;
         },
       });
   }

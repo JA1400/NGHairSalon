@@ -15,7 +15,6 @@ import { DomService } from 'src/app/salon/services/dom/dom.service';
 })
 export class InquiriesComponent implements OnInit {
   inquiries: Inquiry[];
-  actionMessage: string = '';
   constructor(
     private inquiryStoreItem: InquiryStoreItem,
     private adminServices: AdminServices,
@@ -42,11 +41,11 @@ export class InquiriesComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (result) => {
-          this.actionMessage = result.message;
+          this.domService.actionMessage = result.message;
           this.filterDeletedInquiry(id);
         },
         error: (e) => {
-          this.actionMessage = e.error.message;
+          this.domService.actionMessage = e.error.message;
         },
       });
   }

@@ -27,7 +27,8 @@
         >Gallery Images</a
       >
       <a
-        routerLink="/admin/logout"
+        (click)="logOut()"
+        routerLink="/admin/login"
         routerLinkActive="active-link"
         class="main-links"
         >Log Out</a
@@ -51,6 +52,12 @@
     <a routerLink="/admin/inquiries" class="menu-links">Inquiries</a>
     <a routerLink="/admin/testimonials" class="menu-links">Testimonials</a>
     <a routerLink="/admin/gallery" class="menu-links">Gallery Images</a>
-    <a href="/admin/logout" id="logout-link" class="menu-links">Log Out</a>
+    <a
+      (click)="logOut()"
+      routerLink="/admin/login"
+      id="logout-link"
+      class="menu-links"
+      >Log Out</a
+    >
   </div>
 </div>
