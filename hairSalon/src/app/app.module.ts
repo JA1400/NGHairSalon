@@ -4,9 +4,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthService } from './login/services/authservice.service';
-
+import { FourofourComponent } from './fourofour/fourofour.component';
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, FourofourComponent],
   imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule],
   providers: [AuthService],
   bootstrap: [AppComponent],
