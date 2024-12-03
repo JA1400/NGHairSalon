@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Router } from '@angular/router';
 import { AdminGuard } from './services/admin.guard';
+import { FourofourComponent } from './fourofour/fourofour.component';
 
 const routes: Routes = [
   {
@@ -16,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    redirectTo: 'admin/login',
+    redirectTo: '/admin/login',
     pathMatch: 'full',
   },
   {
@@ -32,9 +33,14 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'salon/home',
+    redirectTo: '/salon/home',
     pathMatch: 'full',
   },
+  {
+    path: '**',
+    redirectTo: '/not-found',
+  },
+  { path: 'not-found', component: FourofourComponent },
 ];
 
 @NgModule({
