@@ -12,6 +12,6 @@ router.get("/storedtestimonial", catchAsync(main.getTestimonials));
 
 router.get("/service", catchAsync(main.getServices));
 
-router.post("/inquiry", validateInquiry, catchAsync(main.sendInquiry));
+router.post("/inquiry", validateInquiry, catchAsync(main.postInquiry));
 
 module.exports = router;
