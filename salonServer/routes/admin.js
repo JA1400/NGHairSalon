@@ -39,6 +39,8 @@ router.delete(
   catchAsync(service.deleteService)
 );
 
+/* ******************************** */
+
 router.get(
   "/inquiry",
   passport.authenticate("jwt", { session: false }),
@@ -49,6 +51,8 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   catchAsync(inquiry.deleteInquiry)
 );
+
+/* ******************************** */
 
 router.get(
   "/testimonials",
@@ -72,12 +76,19 @@ router.delete(
   catchAsync(testimonials.deleteSTestimonial)
 );
 
+/* ******************************** */
+
 router.post(
   "/image",
   passport.authenticate("jwt", { session: false }),
   multer.single("image"),
   catchAsync(image.saveImage)
 );
-router.delete("/image/:id", catchAsync(image.deleteImage));
+
+router.delete(
+  "/image/:id",
+  passport.authenticate("jwt", { session: false }),
+  catchAsync(image.deleteImage)
+);
 
 module.exports = router;

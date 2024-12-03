@@ -5,7 +5,7 @@ import { InquiryService } from '../../services/inquiry/inquiry.service';
 import { Inquiry } from '../../types/inquiry.type';
 import { ContactStoreItem } from '../../services/contact/contact.storeitem';
 import { ContactInfo } from '../../types/contact.type';
-import { Observable, Subscription, take } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
@@ -31,6 +31,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 export class ContactComponent implements OnInit, OnDestroy {
   inquiryForm: FormGroup;
   alertMsg: string = '';
+  msgSent: boolean = false;
   contactObservable: Subscription;
   footerInfo: ContactInfo = {
     phone: '',
@@ -60,6 +61,7 @@ export class ContactComponent implements OnInit, OnDestroy {
     );
   }
   onSubmit(): void {
+    this.msgSent = true;
     const inquiry: Inquiry = {
       name: this.inquiryForm.get('name')?.value,
       email: this.inquiryForm.get('email')?.value,
@@ -68,13 +70,14 @@ export class ContactComponent implements OnInit, OnDestroy {
     };
 
     console.log(inquiry);
-    this.inquiryService.sendInquiry(inquiry).subscribe({
-      next: (result) => {
-        if (result.message === 'success') {
-          this.alertMsg = result.message;
-        }
-      },
-    });
+    this.inquiryService
+      .sendInquiry(inquiry)
+      .pipe(take(1))
+      .subscribe({
+        error: (e) => {
+          console.log('Error Sending Message!');
+        },
+      });
   }
 
   ngOnDestroy(): void {

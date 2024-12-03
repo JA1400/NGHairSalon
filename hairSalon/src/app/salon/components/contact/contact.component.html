@@ -54,26 +54,23 @@
 
     <!-- ************************************************** -->
     <ng-template #sentTemplate
-      ><h2 *ngIf="alertMsg === 'success'" class="head-title no-margin w-90">
+      ><h2 @fadeIn *ngIf="msgSent" class="head-title no-margin w-90">
         Message Sent!
       </h2>
     </ng-template>
 
-    <h2
-      *ngIf="alertMsg !== 'success'; else sentTemplate"
-      class="head-title no-margin w-90"
-    >
+    <h2 *ngIf="!msgSent; else sentTemplate" class="head-title no-margin w-90">
       Send a<br id="mobile-b" />Message
     </h2>
 
     <ng-template #sentMsg>
       <i @fadeIn class="fa-solid fa-envelope-circle-check fa-6x"></i>
     </ng-template>
-    <figure *ngIf="alertMsg === 'success'" class="icon-img">
+    <figure *ngIf="msgSent" class="icon-img">
       <ng-container *ngTemplateOutlet="sentMsg"></ng-container>
     </figure>
     <form
-      *ngIf="alertMsg !== 'success'"
+      *ngIf="!msgSent"
       [formGroup]="inquiryForm"
       (ngSubmit)="onSubmit()"
       class="contact-form d-flex w-90"
@@ -106,7 +103,7 @@
         id="submit-btn"
         type="submit"
         class="btn-style"
-        [disabled]="!inquiryForm.valid || alertMsg === 'success'"
+        [disabled]="!inquiryForm.valid || alertMsg === 'success' || msgSent"
       >
         Send Message
       </button>
