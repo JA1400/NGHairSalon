@@ -8,6 +8,6 @@ export class ImageService {
   constructor(private httpClient: HttpClient) {}
 
   loadImages(): Observable<Image[]> {
-    return this.httpClient.get<Image[]>('http://localhost:3000/image');
+    return this.httpClient.get<Image[]>('http://localhost:3000/get-data/image');
   }
 }

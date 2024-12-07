@@ -11,7 +11,7 @@ export class TestimonialService {
 
   loadSTestimonials(): Observable<Testimonial[]> {
     return this.httpClient.get<Testimonial[]>(
-      'http://localhost:3000/storedtestimonial'
+      'http://localhost:3000/get-data/storedtestimonial'
     );
   }
 }

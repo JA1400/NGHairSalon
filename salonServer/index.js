@@ -13,6 +13,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss");
 const cookieParser = require("cookie-parser");
 const passport = require("passport");
+const path = require("path");
 
 require("./config/passport")(passport);
 require("./models/user");
@@ -66,14 +67,25 @@ app.use(cookieParser());
   res.status(200).send({ message: "Successfully received" });
 });
  */
-app.use("/", mainRoutes);
-app.use("/admin", adminRoutes);
-app.use("/admin", userRoutes);
+
+/* 
+app.use(express.static(path.join(__dirname, "/frontEnd/hair-salon")));
+ */
+
+/* Change route names */
+
+app.use("/get-data/", mainRoutes);
+app.use("/get-data/admin", adminRoutes);
+app.use("/get-data/admin", userRoutes);
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message = "Something went wrong" } = err;
   res.status(statusCode).send(message);
 });
+
+/* app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/frontEnd/hair-salon/index.html"));
+}); */
 
 app.listen(port, () => {
   console.log(`Serving on port ${port}`);
