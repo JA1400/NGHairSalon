@@ -8,6 +8,8 @@ export class ContactService {
   constructor(private httpClient: HttpClient) {}
 
   getContactInfo(): Observable<ContactInfo> {
-    return this.httpClient.get<ContactInfo>('http://localhost:3000/contact');
+    return this.httpClient.get<ContactInfo>(
+      'http://localhost:3000/get-data/contact'
+    );
   }
 }

@@ -7,7 +7,7 @@ export class LoginService {
   constructor(private httpClient: HttpClient) {}
 
   login(email: string, password: string): Observable<any> {
-    return this.httpClient.post('http://localhost:3000/admin/login', {
+    return this.httpClient.post('http://localhost:3000/get-data/admin/login', {
       email: email,
       password: password,
     });

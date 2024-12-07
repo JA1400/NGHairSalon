@@ -6,3 +6,4 @@ node_modules
 salonServer/ .env
 id_rsa_priv.pem
 id_rsa_pub.pem
+dist

@@ -218,7 +218,6 @@ export class InfoComponent implements OnInit {
     const service: ServiceTwo[] = this.services.filter((s) => s._id === id);
     const serviceIndex = this.services.findIndex((s) => s._id === id);
 
-    /* switch this to a service insteade of serviceTwo??? */
     this.adminServices
       .updateService(service[0])
       .pipe(take(1))

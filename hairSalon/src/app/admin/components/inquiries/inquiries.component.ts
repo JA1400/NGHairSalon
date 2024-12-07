@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, take } from 'rxjs';
+import { take } from 'rxjs';
 import { Inquiry } from 'src/app/salon/types/inquiry.type';
 import { AdminServices } from '../../services/services/services.service';
 import { InquiryStoreItem } from '../../services/inquiry/inquiry.storeitem';
