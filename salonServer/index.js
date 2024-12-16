@@ -45,34 +45,7 @@ app.use((req, res, next) => {
 
 app.use(cookieParser());
 
-/* app.get("/create", async (req, res) => { */
-/*   const testi = new Inquiry({
-    name: "Test",
-    email: "test@test",
-    message: "test",
-  });
-  await testi.save(); */
-/*   const testi = new Testimonial({
-    name: "Agatha",
-    email: "agathe@gmail.com",
-    message: "This is a pending testimonials",
-  });
-
-  await testi.save();
-  res.status(200).send(testi);
-}); */
-
-/* app.post("/uploadImage", upload.single("image"), (req, res) => {
-  console.log(req.file);
-  res.status(200).send({ message: "Successfully received" });
-});
- */
-
-/* 
 app.use(express.static(path.join(__dirname, "/frontEnd/hair-salon")));
- */
-
-/* Change route names */
 
 app.use("/get-data/", mainRoutes);
 app.use("/get-data/admin", adminRoutes);
@@ -83,9 +56,9 @@ app.use((err, req, res, next) => {
   res.status(statusCode).send(message);
 });
 
-/* app.get("*", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/frontEnd/hair-salon/index.html"));
-}); */
+});
 
 app.listen(port, () => {
   console.log(`Serving on port ${port}`);

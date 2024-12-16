@@ -183,11 +183,11 @@ export class GalleryComponent implements OnInit {
   removeImageSequentially() {
     const intervalId = setInterval(() => {
       if (this.imagesToUpload.length > 0) {
-        this.imagesToUpload.splice(0, 1); // Remove the first element
+        this.imagesToUpload.splice(0, 1);
       } else {
         this.disableChooseBtn = false;
         this.clearFileInput();
-        clearInterval(intervalId); // Stop the interval when the array is empty
+        clearInterval(intervalId);
       }
     }, 500);
   }

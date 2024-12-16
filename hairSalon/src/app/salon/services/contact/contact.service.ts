@@ -9,7 +9,7 @@ export class ContactService {
 
   getContactInfo(): Observable<ContactInfo> {
     return this.httpClient.get<ContactInfo>(
-      'http://localhost:3000/get-data/contact'
+      '/get-data/contact'
     );
   }
 }

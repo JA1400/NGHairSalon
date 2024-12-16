@@ -224,8 +224,9 @@
             required
           />
           <textarea
+            (input)="onInput($event)"
             name="description"
-            rows="1"
+            rows="2"
             cols="50"
             class="s-desc s-general f-inputs description"
             required

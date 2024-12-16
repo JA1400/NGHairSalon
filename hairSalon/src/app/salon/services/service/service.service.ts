@@ -9,7 +9,7 @@ export class ServiceService {
 
   loadServices(): Observable<Service[]> {
     return this.httpClient.get<Service[]>(
-      'http://localhost:3000/get-data/service'
+      '/get-data/service'
     );
   }
 
@@ -19,7 +19,7 @@ export class ServiceService {
     price: number,
     description: string
   ): Observable<any> {
-    const url: string = `http://localhost:3000/get-data/service${id}`;
+    const url: string = `/get-data/service${id}`;
     return this.httpClient.put(url, {
       title: title,
       price: price,
