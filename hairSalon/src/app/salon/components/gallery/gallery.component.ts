@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomService } from '../../services/dom/dom.service';
 import { ImageStoreItem } from '../../services/image/image.storeitem';
 import { Image } from '../../types/image.type';
-import { delay, take, map, Subscription, filter } from 'rxjs';
+import { delay, take, map, filter } from 'rxjs';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({

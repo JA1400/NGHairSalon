@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DomService } from '../../services/dom/dom.service';
 import { ContactStoreItem } from '../../services/contact/contact.storeitem';
 import { ContactInfo } from '../../types/contact.type';
-import { finalize, Subject, take, takeUntil } from 'rxjs';
+import { take } from 'rxjs';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',

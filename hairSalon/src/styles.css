@@ -35,9 +35,9 @@ textarea {
   --primary-color: #fff8f1;
   --secondary-color: black;
   --third-color: #bd7655;
-  --cont-padding: 1.2rem;
+  --cont-padding: 1.8rem;
   --g-max-width: 600px;
-  --gap: 1.2rem;
+  --gap: 1.8rem;
 }
 
 .d-flex {
@@ -183,7 +183,7 @@ textarea {
   :root {
     --max-width-val: 750px;
     --g-max-width: 800px;
-    --gap: 1.8rem;
+    --gap: 2rem;
     --cont-padding: 3rem;
   }
 }

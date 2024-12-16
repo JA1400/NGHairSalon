@@ -30,7 +30,7 @@ module.exports.deleteImage = async (req, res) => {
   const { id } = req.params;
   const img = await Image.findById(id);
   imageKit.deleteFile(img.fileId, async function (error, result) {
-    if (error) res.status(500).send({ error: "Problem uploading image!" });
+    if (error) res.status(500).send({ error: "Problem Deleting image!" });
 
     await Image.findByIdAndDelete(id);
     res.status(200).send({ message: "Successfully Deleted Image" });

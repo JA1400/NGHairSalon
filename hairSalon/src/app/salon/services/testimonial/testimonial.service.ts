@@ -10,8 +10,6 @@ export class TestimonialService {
   constructor(private httpClient: HttpClient) {}
 
   loadSTestimonials(): Observable<Testimonial[]> {
-    return this.httpClient.get<Testimonial[]>(
-      'http://localhost:3000/get-data/storedtestimonial'
-    );
+    return this.httpClient.get<Testimonial[]>('/get-data/storedtestimonial');
   }
 }

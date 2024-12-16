@@ -24,9 +24,11 @@
         {{ this.footerInfo.address }}
       </p>
       <p class="f-text-style b-info">Telephone</p>
-      <a class="f-text-style b-info" href=""> {{ this.footerInfo.phone }}</a>
+      <a class="f-text-style b-info" [href]="'tel:' + this.footerInfo.phone">
+        {{ this.footerInfo.phone }}</a
+      >
       <p class="f-text-style b-info">Email</p>
-      <a class="f-text-style b-info" href="">
+      <a class="f-text-style b-info" [href]="'mailto:' + this.footerInfo.email">
         {{ this.footerInfo.email }}
       </a>
     </section>
