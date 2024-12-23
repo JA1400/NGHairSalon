@@ -5,6 +5,7 @@ const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const pathToKey = "";
 if (process.env.NODE_ENV !== "production") {
+  console.log(__dirname, "..", "id_rsa_pub.pem");
   pathToKey = path.join(__dirname, "..", "id_rsa_pub.pem");
 } else {
   pathToKey = "/etc/secrets/id_rsa_pub.pem";
