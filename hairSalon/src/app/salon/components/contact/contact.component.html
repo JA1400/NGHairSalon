@@ -26,7 +26,7 @@
         <i class="fa-solid fa-map-location-dot fa-6x"></i>
       </figure>
       <h3 class="no-margin">Location</h3>
-      <p class="no-margin section-text">test address</p>
+      <p class="no-margin section-text">{{ footerInfo.address }}</p>
     </section>
     <section class="contact-group w-90 d-flex">
       <figure class="icon-img">
@@ -34,7 +34,7 @@
       </figure>
       <h3 class="no-margin">Phone</h3>
       <p class="no-margin section-text">
-        <a href="tel:4145558481"> 555-555-5555</a>
+        <a [href]="'tel:' + footerInfo.phone"> {{ footerInfo.phone }}</a>
       </p>
     </section>
     <section class="contact-group w-90 d-flex">
@@ -43,7 +43,7 @@
       </figure>
       <h3 class="no-margin">Email</h3>
       <p class="no-margin section-text">
-        <a href="mailto: kittysbeauty@petitoandco.com"> test@email.com </a>
+        <a [href]="'mailto:' + footerInfo.email"> {{ footerInfo.email }} </a>
       </p>
     </section>
     <section class="square-img rec-image rec-i-2 w-90"></section>
