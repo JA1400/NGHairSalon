@@ -10,7 +10,13 @@ const pathToKey = "/etc/secrets/id_rsa_pub.pem";
 } else {
   pathToKey = "/etc/secrets/id_rsa_pub.pem";
 } */
-const PUB_KEY = fs.readFileSync(pathToKey, "utf8");
+const PUB_KEY = "";
+try {
+  PUB_KEY = fs.readFileSync(pathToKey, "utf8");
+} catch {
+  console.log('Error Finding Key');
+}
+
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: PUB_KEY,
