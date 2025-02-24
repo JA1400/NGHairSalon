@@ -49,6 +49,13 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, "/frontEnd/hair-salon")));
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*"); // Allows all domains (change * to a specific origin if needed)
+  res.header("Access-Control-Allow-Methods", "GET");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
+
 app.use("/get-data/", mainRoutes);
 app.use("/get-data/admin", adminRoutes);
 app.use("/get-data/admin", userRoutes);
